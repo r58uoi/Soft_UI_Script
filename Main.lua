@@ -1,4 +1,4 @@
-    local SoftGui = Instance.new("ScreenGui")
+local SoftGui = Instance.new("ScreenGui")
 SoftGui.Name = "SoftGui"
 SoftGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
