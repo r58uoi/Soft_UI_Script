@@ -1,5 +1,4 @@
-function start()
-	local SoftGui = Instance.new("ScreenGui")
+    local SoftGui = Instance.new("ScreenGui")
 	SoftGui.Name = "SoftGui"
 	SoftGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
@@ -675,4 +674,3 @@ function start()
 			SoftGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
 		end
 	end
-end
