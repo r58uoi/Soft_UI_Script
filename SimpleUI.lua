@@ -881,5 +881,5 @@ UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
 end)
 
 UI_Obj["OpenDex"].Button.Activated:Connect(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/LorekeeperZinnia/Dex/refs/heads/master/main.lua"))()
+	loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
 end)
