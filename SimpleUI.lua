@@ -1,0 +1,885 @@
+local UI_Table = {
+	ScreenGui = Instance.new("ScreenGui"),
+	BillboardGui = Instance.new("BillboardGui"),
+	Frame = Instance.new("Frame"),
+	ScrollingFrame = Instance.new("ScrollingFrame"),
+	TextLabel = Instance.new("TextLabel"),
+	TextBox = Instance.new("TextBox"),
+	TextButton = Instance.new("TextButton"),
+	ImageButton = Instance.new("ImageButton"),
+	ImageLabel = Instance.new("ImageLabel"),
+	UIListLayout = Instance.new("UIListLayout"),
+	UIPadding = Instance.new("UIPadding"),
+	UIShadow = Instance.new("UIShadow"),
+	UISizeConstraint = Instance.new("UISizeConstraint")
+}
+
+UI_Table["Frame"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["Frame"].BorderSizePixel = 0
+UI_Table["Frame"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+
+UI_Table["TextLabel"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["TextLabel"].BorderSizePixel = 0
+UI_Table["TextLabel"].TextColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["TextLabel"].BackgroundTransparency = 1
+
+
+UI_Table["TextButton"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["TextButton"].BorderSizePixel = 0
+UI_Table["TextButton"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["TextButton"].TextColor3 = Color3.fromRGB(0, 0, 0)
+
+UI_Table["TextBox"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["TextBox"].BorderSizePixel = 0
+UI_Table["TextBox"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["TextBox"].TextColor3 = Color3.fromRGB(0, 0, 0)
+
+
+UI_Table["ImageLabel"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["ImageLabel"].BorderSizePixel = 0
+UI_Table["ImageLabel"].Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+UI_Table["ImageLabel"].BackgroundTransparency = 1
+
+UI_Table["ImageButton"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["ImageButton"].BorderSizePixel = 0
+UI_Table["ImageButton"].BackgroundTransparency = 1
+
+UI_Table["ScrollingFrame"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UI_Table["ScrollingFrame"].BorderSizePixel = 0
+UI_Table["ScrollingFrame"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["ScrollingFrame"].ScrollBarThickness = 5
+UI_Table["ScrollingFrame"].VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+UI_Table["ScrollingFrame"].ScrollingDirection = Enum.ScrollingDirection.Y
+UI_Table["ScrollingFrame"].AutomaticCanvasSize = Enum.AutomaticSize.Y
+UI_Table["ScrollingFrame"].CanvasSize = UDim2.new(0, 0, 0, 0)
+UI_Table["ScrollingFrame"].ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["ScrollingFrame"].MidImage = "rbxassetid://5234388158"
+UI_Table["ScrollingFrame"].TopImage = "rbxassetid://5234388158"
+UI_Table["ScrollingFrame"].BottomImage = "rbxassetid://5234388158"
+UI_Table["ScrollingFrame"].BackgroundTransparency = 1
+
+UI_Table["UIListLayout"].SortOrder = Enum.SortOrder.LayoutOrder
+
+UI_Table["UIShadow"].BlurRadius = UDim.new(0, 20)
+UI_Table["UIShadow"].Transparency = 0.5
+
+local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, BarButton)
+	local UI_GUI_Bulider = {
+		--GUI
+		MainGui = UI_Table["ScreenGui"]:Clone(),
+		MainFrame = UI_Table["Frame"]:Clone(),
+		UIShadow = UI_Table["UIShadow"]:Clone(),
+		UISizeConstraint = UI_Table["UISizeConstraint"]:Clone(),
+
+		FrameBar = UI_Table["Frame"]:Clone(),
+
+		UIListLayoutOne = UI_Table["UIListLayout"]:Clone(),
+		FrameBarOne = UI_Table["Frame"]:Clone(),
+
+		UIListLayoutOneOne = UI_Table["UIListLayout"]:Clone(),
+		ImageLabelGame = UI_Table["ImageLabel"]:Clone(),
+		TextLabelGame = UI_Table["TextLabel"]:Clone(),
+
+		FrameBarTwo = UI_Table["Frame"]:Clone(),
+
+		UIListLayoutOneTwo = UI_Table["UIListLayout"]:Clone(),
+		ImageButtonClose = UI_Table["ImageButton"]:Clone(),
+		ImageButtonMaxMinSize = UI_Table["ImageButton"]:Clone(),
+		ImageButtonMiniSize = UI_Table["ImageButton"]:Clone(),
+
+		FrameBox = UI_Table["Frame"]:Clone(),
+		
+		FrameBoxScroll = UI_Table["Frame"]:Clone(),
+		
+		FrameMenuScroll = UI_Table["Frame"]:Clone(),
+		ScrollingFrameMenu = UI_Table["ScrollingFrame"]:Clone(),
+
+		UIListLayoutTwo = UI_Table["UIListLayout"]:Clone(),
+
+		SizeFrame = UI_Table["Frame"]:Clone(),
+
+	}
+
+	UI_GUI_Bulider["MainGui"].Parent = GameGuiPath --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+
+	UI_GUI_Bulider["MainFrame"].Parent = UI_GUI_Bulider["MainGui"]
+	UI_GUI_Bulider["MainFrame"].Position = PosGui
+	UI_GUI_Bulider["MainFrame"].Size = SizeGui
+	UI_GUI_Bulider["MainFrame"].BorderSizePixel = 1
+
+	UI_GUI_Bulider["UIShadow"].Parent = UI_GUI_Bulider["MainFrame"]
+
+	UI_GUI_Bulider["UISizeConstraint"].Parent = UI_GUI_Bulider["MainFrame"]
+	UI_GUI_Bulider["UISizeConstraint"].MinSize = MinSizeGui
+
+
+
+	UI_GUI_Bulider["FrameBar"].Parent = UI_GUI_Bulider["MainFrame"]
+	UI_GUI_Bulider["FrameBar"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Bulider["FrameBar"].BorderSizePixel = 1
+
+	UI_GUI_Bulider["UIListLayoutOne"].Parent = UI_GUI_Bulider["FrameBar"]
+	UI_GUI_Bulider["UIListLayoutOne"].FillDirection = Enum.FillDirection.Horizontal
+	UI_GUI_Bulider["UIListLayoutOne"].HorizontalFlex = Enum.UIFlexAlignment.SpaceBetween
+
+
+
+	UI_GUI_Bulider["FrameBarOne"].Parent = UI_GUI_Bulider["FrameBar"]
+	UI_GUI_Bulider["FrameBarOne"].Size = UDim2.new(0, 0, 1, 0)
+	UI_GUI_Bulider["FrameBarOne"].AutomaticSize = Enum.AutomaticSize.X
+
+	UI_GUI_Bulider["UIListLayoutOneOne"].Parent = UI_GUI_Bulider["FrameBarOne"]
+	UI_GUI_Bulider["UIListLayoutOneOne"].FillDirection = Enum.FillDirection.Horizontal
+	UI_GUI_Bulider["UIListLayoutOneOne"].HorizontalAlignment = Enum.HorizontalAlignment.Left
+
+	UI_GUI_Bulider["ImageLabelGame"].Parent = UI_GUI_Bulider["FrameBarOne"]
+	UI_GUI_Bulider["ImageLabelGame"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Bulider["ImageLabelGame"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_Bulider["ImageLabelGame"].LayoutOrder = 1
+	UI_GUI_Bulider["ImageLabelGame"].Image = "rbxassetid://77754544522243"
+	UI_GUI_Bulider["ImageLabelGame"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+
+	UI_GUI_Bulider["TextLabelGame"].Parent = UI_GUI_Bulider["FrameBarOne"]
+	UI_GUI_Bulider["TextLabelGame"].Size = UDim2.new(0, 0, 1, 0)
+	UI_GUI_Bulider["TextLabelGame"].AutomaticSize = Enum.AutomaticSize.X
+	UI_GUI_Bulider["TextLabelGame"].Text = [[SimplyUI]] --[[SimplyHub]]
+	UI_GUI_Bulider["TextLabelGame"].Font = Enum.Font.SourceSansBold
+	UI_GUI_Bulider["TextLabelGame"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Bulider["TextLabelGame"].TextSize = 18
+	UI_GUI_Bulider["TextLabelGame"].LayoutOrder = 2
+
+
+
+
+	UI_GUI_Bulider["FrameBarTwo"].Parent = UI_GUI_Bulider["FrameBar"]
+	UI_GUI_Bulider["FrameBarTwo"].Size = UDim2.new(0, 0, 1, 0)
+	UI_GUI_Bulider["FrameBarTwo"].AutomaticSize = Enum.AutomaticSize.X
+
+	UI_GUI_Bulider["UIListLayoutOneTwo"].Parent = UI_GUI_Bulider["FrameBarTwo"]
+	UI_GUI_Bulider["UIListLayoutOneTwo"].FillDirection = Enum.FillDirection.Horizontal
+	UI_GUI_Bulider["UIListLayoutOneTwo"].HorizontalAlignment = Enum.HorizontalAlignment.Right
+
+	if BarButton[1] == true then
+		UI_GUI_Bulider["ImageButtonClose"].Parent = UI_GUI_Bulider["FrameBarTwo"]
+		UI_GUI_Bulider["ImageButtonClose"].Size = UDim2.new(1, 0, 1, 0)
+		UI_GUI_Bulider["ImageButtonClose"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+		UI_GUI_Bulider["ImageButtonClose"].LayoutOrder = 3
+		UI_GUI_Bulider["ImageButtonClose"].Image = "rbxassetid://79193956246760"
+		UI_GUI_Bulider["ImageButtonClose"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+		UI_GUI_Bulider["ImageButtonClose"].Activated:Connect(function()
+			UI_GUI_Bulider["MainGui"]:Destroy()
+			script:Destroy()
+		end)
+	end
+	if BarButton[2] == true then
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].Parent = UI_GUI_Bulider["FrameBarTwo"]
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].Size = UDim2.new(1, 0, 1, 0)
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].LayoutOrder = 2
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].Image = "rbxassetid://77217748712428"
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+	end
+	if BarButton[3] == true then
+		UI_GUI_Bulider["ImageButtonMiniSize"].Parent = UI_GUI_Bulider["FrameBarTwo"]
+		UI_GUI_Bulider["ImageButtonMiniSize"].Size = UDim2.new(1, 0, 1, 0)
+		UI_GUI_Bulider["ImageButtonMiniSize"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+		UI_GUI_Bulider["ImageButtonMiniSize"].LayoutOrder = 1
+		UI_GUI_Bulider["ImageButtonMiniSize"].Image = "rbxassetid://119618391049200"
+		UI_GUI_Bulider["ImageButtonMiniSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+	end
+
+
+	UI_GUI_Bulider["FrameBox"].Parent = UI_GUI_Bulider["MainFrame"]
+	UI_GUI_Bulider["FrameBox"].Size = UDim2.new(1, 0, 1, -40)
+	UI_GUI_Bulider["FrameBox"].Position = UDim2.new(0, 0, 0, 40)
+	
+	UI_GUI_Bulider["FrameMenuScroll"].Parent = UI_GUI_Bulider["FrameBox"]
+	UI_GUI_Bulider["FrameMenuScroll"].Size = UDim2.new(0, 130, 1, 0)
+	UI_GUI_Bulider["FrameMenuScroll"].BorderSizePixel = 1
+	
+	UI_GUI_Bulider["ScrollingFrameMenu"].Parent = UI_GUI_Bulider["FrameMenuScroll"]
+	UI_GUI_Bulider["ScrollingFrameMenu"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Bulider["ScrollingFrameMenu"].BorderSizePixel = 1
+
+	UI_GUI_Bulider["UIListLayoutTwo"].Parent = UI_GUI_Bulider["ScrollingFrameMenu"]
+	
+	UI_GUI_Bulider["FrameBoxScroll"].Parent = UI_GUI_Bulider["FrameBox"]
+	UI_GUI_Bulider["FrameBoxScroll"].Size = UDim2.new(1, -130, 1, 0)
+	--UI_GUI_Bulider["FrameBoxScroll"].Transparency = 1
+	UI_GUI_Bulider["FrameBoxScroll"].Position = UDim2.new(0, 130, 0, 0)
+	UI_GUI_Bulider["FrameBoxScroll"].BorderSizePixel = 1
+	
+	
+	UI_GUI_Bulider["SizeFrame"].Parent = UI_GUI_Bulider["MainFrame"]
+	UI_GUI_Bulider["SizeFrame"].AnchorPoint = Vector2.new(1, 1)
+	UI_GUI_Bulider["SizeFrame"].Position = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Bulider["SizeFrame"].Size = UDim2.new(0, 10, 0, 10)
+	UI_GUI_Bulider["SizeFrame"].Transparency = 1
+
+
+	local UIS = game:GetService('UserInputService')
+	local frame = UI_GUI_Bulider["FrameBar"]
+	local GUI = UI_GUI_Bulider["MainFrame"]
+	local Size = UI_GUI_Bulider["SizeFrame"]
+	local dragSpeed = 0.001
+
+	if SettingsGui[1] == true then
+		local dragToggle = nil
+		local dragStart = nil
+		local startPos = nil
+
+		local function updateInput(input)
+			local delta = input.Position - dragStart
+			local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+			game:GetService('TweenService'):Create(GUI, TweenInfo.new(dragSpeed), {Position = position}):Play()
+		end
+
+
+
+		frame.InputBegan:Connect(function(input)
+			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+				dragToggle = true
+				dragStart = input.Position
+				startPos = GUI.Position
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragToggle = false
+					end
+				end)
+			end
+		end)
+
+
+
+		UIS.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+				if dragToggle then
+					updateInput(input)
+				end
+			end
+		end)
+	end
+
+	if SettingsGui[2] == true then
+		local dragToggleTwo = nil
+		local dragStartTwo = nil
+		local startPosTwo = nil
+		local startPos1 = nil
+
+		local function updateInputTwo(input)
+			local delta = input.Position - dragStartTwo
+			local position = UDim2.new(startPosTwo.X.Scale, startPosTwo.X.Offset + delta.X,
+				startPosTwo.Y.Scale, startPosTwo.Y.Offset + delta.Y)
+			--local position1 = UDim2.new(startPos1.X.Scale, startPos1.X.Offset + delta.X,
+			--startPos1.Y.Scale, startPos1.Y.Offset + delta.Y)
+			game:GetService('TweenService'):Create(GUI, TweenInfo.new(dragSpeed), {Size = position}):Play()
+		end
+
+
+
+		Size.InputBegan:Connect(function(input)
+			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+				local Save_POS1 = UDim2.new(0, GUI.AbsolutePosition.X, 0, GUI.AbsolutePosition.Y)
+				GUI.Position = Save_POS1
+				dragToggleTwo = true
+				dragStartTwo = input.Position
+				startPosTwo = GUI.Size
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragToggleTwo = false
+					end
+				end)
+			end
+		end)
+
+
+
+		UIS.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+				if dragToggleTwo then
+					updateInputTwo(input)
+				end
+			end
+		end)
+	end
+	return {
+		UI_GUI_Bulider["MainGui"], 
+		UI_GUI_Bulider["ScrollingFrameMenu"],
+		UI_GUI_Bulider["FrameBoxScroll"]
+	}
+end
+
+local function CreateMenu(Object, Image, Text, MainBool, ScrollObject)
+	local UI_GUI_Menu = {
+		TextButton = UI_Table["TextButton"]:Clone(),
+		UIListLayout = UI_Table["UIListLayout"]:Clone(),
+		ImageLabel = UI_Table["ImageLabel"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+	}
+
+	UI_GUI_Menu["TextButton"].Parent = Object
+	UI_GUI_Menu["TextButton"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Menu["TextButton"].BorderSizePixel = 1
+	UI_GUI_Menu["TextButton"].Text = ""
+	UI_GUI_Menu["TextButton"].AutoButtonColor = false
+
+	UI_GUI_Menu["UIListLayout"].Parent = UI_GUI_Menu["TextButton"]
+	UI_GUI_Menu["UIListLayout"].VerticalAlignment = Enum.VerticalAlignment.Center
+	UI_GUI_Menu["UIListLayout"].HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UI_GUI_Menu["UIListLayout"].FillDirection = Enum.FillDirection.Horizontal
+
+	UI_GUI_Menu["ImageLabel"].Parent = UI_GUI_Menu["TextButton"]
+	UI_GUI_Menu["ImageLabel"].Image = Image --"rbxassetid://116558416127511"
+	UI_GUI_Menu["ImageLabel"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+	UI_GUI_Menu["ImageLabel"].Size = UDim2.new(0, 40, 0, 40)
+	UI_GUI_Menu["ImageLabel"].LayoutOrder = 1
+	UI_GUI_Menu["ImageLabel"].BackgroundTransparency = 1
+
+	UI_GUI_Menu["TextLabel"].Parent = UI_GUI_Menu["TextButton"]
+	UI_GUI_Menu["TextLabel"].Size = UDim2.new(1, -40, 1, 0)
+	UI_GUI_Menu["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Menu["TextLabel"].Text = Text
+	UI_GUI_Menu["TextLabel"].TextSize = 12
+	UI_GUI_Menu["TextLabel"].LayoutOrder = 2
+	UI_GUI_Menu["TextLabel"].BackgroundTransparency = 1
+	
+	if MainBool == true then
+		UI_GUI_Menu["TextButton"].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		UI_GUI_Menu["ImageLabel"].ImageColor3 = Color3.fromRGB(255, 255, 255)
+		UI_GUI_Menu["TextLabel"].TextColor3 = Color3.fromRGB(255, 255, 255)
+		
+	end
+	
+	if ScrollObject ~= nil then
+		UI_GUI_Menu["TextButton"].Activated:Connect(function()
+			ScrollObject.Visible = true
+			UI_GUI_Menu["TextButton"].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+			UI_GUI_Menu["ImageLabel"].ImageColor3 = Color3.fromRGB(255, 255, 255)
+			UI_GUI_Menu["TextLabel"].TextColor3 = Color3.fromRGB(255, 255, 255)
+			for i, v in pairs(Object:GetChildren()) do
+				if v:IsA("TextButton") then
+					if v ~= UI_GUI_Menu["TextButton"] then
+						if v.BackgroundColor3 ~= Color3.fromRGB(255, 255, 255) then
+							v.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							v.ImageLabel.ImageColor3 = Color3.fromRGB(0, 0, 0)
+							v.TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+						end
+					end
+				end
+			end
+			for i, v in pairs(ScrollObject.Parent:GetChildren()) do
+				if v:IsA("ScrollingFrame") then
+					if v ~= ScrollObject then
+						if v.Visible ~= false then
+							v.Visible = false
+						end
+					end
+				end
+			end
+		end)
+		if MainBool == true then
+			ScrollObject.Visible = true
+		else
+			ScrollObject.Visible = false
+		end
+	end
+	
+	return UI_GUI_Menu["TextButton"]
+end
+
+local function CreateMenuBox(Object)
+	local UI_GUI_MenuBox = {
+		ScrollingFrameBox = UI_Table["ScrollingFrame"]:Clone(),
+		UIListLayoutThree = UI_Table["UIListLayout"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone()
+	}
+	
+	UI_GUI_MenuBox["ScrollingFrameBox"].Parent = Object
+	UI_GUI_MenuBox["ScrollingFrameBox"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_MenuBox["ScrollingFrameBox"].BorderSizePixel = 1
+	--UI_GUI_MenuBox["ScrollingFrameBox"].Visible = Visible	
+	
+	UI_GUI_MenuBox["UIListLayoutThree"].Parent = UI_GUI_MenuBox["ScrollingFrameBox"]
+	UI_GUI_MenuBox["UIListLayoutThree"].Padding = UDim.new(0, 1)
+	UI_GUI_MenuBox["UIListLayoutThree"].HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+	UI_GUI_MenuBox["UIPadding"].Parent = UI_GUI_MenuBox["ScrollingFrameBox"]
+	UI_GUI_MenuBox["UIPadding"].PaddingBottom = UDim.new(0, 10)
+	UI_GUI_MenuBox["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_MenuBox["UIPadding"].PaddingRight = UDim.new(0, 10)
+	
+	return UI_GUI_MenuBox["ScrollingFrameBox"]
+end
+
+local function CreateBox(Object, Text)
+	local UI_GUI_Box = {
+		Frame = UI_Table["Frame"]:Clone(),
+		UIListLayout = UI_Table["UIListLayout"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+	}
+
+	UI_GUI_Box["Frame"].Parent = Object
+	UI_GUI_Box["Frame"].Size = UDim2.new(1, 0, 0, 0)
+	UI_GUI_Box["Frame"].AutomaticSize = Enum.AutomaticSize.Y
+
+	UI_GUI_Box["UIListLayout"].Parent = UI_GUI_Box["Frame"]
+	UI_GUI_Box["UIListLayout"].VerticalAlignment = Enum.VerticalAlignment.Center
+
+	UI_GUI_Box["TextLabel"].Parent = UI_GUI_Box["Frame"]
+	UI_GUI_Box["TextLabel"].LayoutOrder = 0
+	UI_GUI_Box["TextLabel"].Text = Text
+	UI_GUI_Box["TextLabel"].TextSize = 16
+	UI_GUI_Box["TextLabel"].Size = UDim2.new(1, 0, 0, 30)
+	UI_GUI_Box["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	return UI_GUI_Box["Frame"]
+end
+
+
+local function CreateSwitch(Object, Text)
+	local UI_GUI_Switch = {
+		Frame = UI_Table["Frame"]:Clone(),
+		FrameTwo = UI_Table["Frame"]:Clone(),
+		TextButton = UI_Table["TextButton"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		BoolValue = Instance.new("BoolValue")
+	}
+
+	UI_GUI_Switch["Frame"].Parent = Object
+	UI_GUI_Switch["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Switch["Frame"].BorderSizePixel = 1
+	UI_GUI_Switch["Frame"].LayoutOrder = 1
+
+	UI_GUI_Switch["TextLabel"].Parent = UI_GUI_Switch["Frame"]
+	UI_GUI_Switch["TextLabel"].LayoutOrder = 0
+	UI_GUI_Switch["TextLabel"].Text = Text
+	UI_GUI_Switch["TextLabel"].TextSize = 12
+	UI_GUI_Switch["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Switch["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Switch["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Switch["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Switch["TextButton"].Parent = UI_GUI_Switch["Frame"]
+	UI_GUI_Switch["TextButton"].BorderSizePixel = 1
+	UI_GUI_Switch["TextButton"].Text = ""
+	UI_GUI_Switch["TextButton"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_Switch["TextButton"].AutoButtonColor = false
+	UI_GUI_Switch["TextButton"].Size = UDim2.new(0, 40, 1, -20)
+	UI_GUI_Switch["TextButton"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Switch["TextButton"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_Switch["FrameTwo"].Parent = UI_GUI_Switch["TextButton"]
+	UI_GUI_Switch["FrameTwo"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Switch["FrameTwo"].BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	UI_GUI_Switch["FrameTwo"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+
+	UI_GUI_Switch["UIPadding"].Parent = UI_GUI_Switch["Frame"]
+	UI_GUI_Switch["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Switch["UIPadding"].PaddingRight = UDim.new(0, 10)
+	
+	UI_GUI_Switch["BoolValue"].Parent = UI_GUI_Switch["TextButton"]
+	UI_GUI_Switch["BoolValue"].Name = Text
+	UI_GUI_Switch["BoolValue"].Value = false
+	
+	UI_GUI_Switch["TextButton"].Activated:Connect(function()
+		if UI_GUI_Switch["BoolValue"].Value == false then
+			UI_GUI_Switch["BoolValue"].Value = true
+			UI_GUI_Switch["FrameTwo"].BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+			UI_GUI_Switch["FrameTwo"].Position = UDim2.new(0.5, 0, 0, 0)
+		else
+			UI_GUI_Switch["BoolValue"].Value = false
+			UI_GUI_Switch["FrameTwo"].BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+			UI_GUI_Switch["FrameTwo"].Position = UDim2.new(0, 0, 0, 0)
+		end
+	end)
+	
+	return {
+		UI_GUI_Switch["Frame"],
+		Bool = UI_GUI_Switch["BoolValue"]
+	}
+end
+local function CreateButton(Object, Text, TextButton, ColorButton)
+	local UI_GUI_Button = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextButton = UI_Table["TextButton"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+	}
+
+	UI_GUI_Button["Frame"].Parent = Object
+	UI_GUI_Button["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Button["Frame"].BorderSizePixel = 1
+	UI_GUI_Button["Frame"].LayoutOrder = 1
+
+	UI_GUI_Button["TextLabel"].Parent = UI_GUI_Button["Frame"]
+	UI_GUI_Button["TextLabel"].LayoutOrder = 0
+	UI_GUI_Button["TextLabel"].Text = Text
+	UI_GUI_Button["TextLabel"].TextSize = 12
+	UI_GUI_Button["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Button["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Button["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Button["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Button["TextButton"].Parent = UI_GUI_Button["Frame"]
+	UI_GUI_Button["TextButton"].BorderSizePixel = 1
+	UI_GUI_Button["TextButton"].Text = TextButton
+	UI_GUI_Button["TextButton"].BackgroundColor3 = ColorButton
+	UI_GUI_Button["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_Button["TextButton"].TextSize = 16
+	UI_GUI_Button["TextButton"].Font = Enum.Font.SourceSansBold
+	UI_GUI_Button["TextButton"].AutomaticSize = Enum.AutomaticSize.X
+	UI_GUI_Button["TextButton"].AutoButtonColor = true
+	UI_GUI_Button["TextButton"].Size = UDim2.new(0, 0, 1, -20)
+	UI_GUI_Button["TextButton"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Button["TextButton"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_Button["UIPadding"].Parent = UI_GUI_Button["Frame"]
+	UI_GUI_Button["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Button["UIPadding"].PaddingRight = UDim.new(0, 10)
+
+	UI_GUI_Button["UIPaddingText"].Parent = UI_GUI_Button["TextButton"]
+	UI_GUI_Button["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
+	UI_GUI_Button["UIPaddingText"].PaddingRight = UDim.new(0, 5)
+	return {
+		UI_GUI_Button["Frame"],
+		Button = UI_GUI_Button["TextButton"]
+	}
+end
+local function CreateTextBox(Object, Text, PlaceHolderText)
+	local UI_GUI_TextBox = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextBox = UI_Table["TextBox"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+		StringValue = Instance.new("StringValue")
+	}
+
+	UI_GUI_TextBox["Frame"].Parent = Object
+	UI_GUI_TextBox["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_TextBox["Frame"].BorderSizePixel = 1
+	UI_GUI_TextBox["Frame"].LayoutOrder = 1
+
+	UI_GUI_TextBox["TextLabel"].Parent = UI_GUI_TextBox["Frame"]
+	UI_GUI_TextBox["TextLabel"].LayoutOrder = 0
+	UI_GUI_TextBox["TextLabel"].Text = Text
+	UI_GUI_TextBox["TextLabel"].TextSize = 12
+	UI_GUI_TextBox["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_TextBox["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_TextBox["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_TextBox["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_TextBox["TextBox"].Parent = UI_GUI_TextBox["Frame"]
+	UI_GUI_TextBox["TextBox"].BorderSizePixel = 1
+	UI_GUI_TextBox["TextBox"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_TextBox["TextBox"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
+	UI_GUI_TextBox["TextBox"].Text = ""
+	UI_GUI_TextBox["TextBox"].PlaceholderText = PlaceHolderText
+	UI_GUI_TextBox["TextBox"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_TextBox["TextBox"].TextSize = 16
+	UI_GUI_TextBox["TextBox"].Font = Enum.Font.SourceSansBold
+	UI_GUI_TextBox["TextBox"].AutomaticSize = Enum.AutomaticSize.X
+	UI_GUI_TextBox["TextBox"].Size = UDim2.new(0, 0, 1, -20)
+	UI_GUI_TextBox["TextBox"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_TextBox["TextBox"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_TextBox["UIPadding"].Parent = UI_GUI_TextBox["Frame"]
+	UI_GUI_TextBox["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_TextBox["UIPadding"].PaddingRight = UDim.new(0, 10)
+
+	UI_GUI_TextBox["UIPaddingText"].Parent = UI_GUI_TextBox["TextBox"]
+	UI_GUI_TextBox["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
+	UI_GUI_TextBox["UIPaddingText"].PaddingRight = UDim.new(0, 5)
+	
+	UI_GUI_TextBox["TextBox"].FocusLost:Connect(function()
+		UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+	end)
+	
+	return {
+		UI_GUI_TextBox["Frame"],
+		UI_GUI_TextBox["TextBox"],
+		StrValue = UI_GUI_TextBox["StringValue"]
+	}
+end
+local function CreateColor(Object, Text, StandartColor)
+	local UI_GUI_Color = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextButton = UI_Table["TextButton"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+	}
+
+	UI_GUI_Color["Frame"].Parent = Object
+	UI_GUI_Color["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Color["Frame"].BorderSizePixel = 1
+	UI_GUI_Color["Frame"].LayoutOrder = 1
+
+	UI_GUI_Color["TextLabel"].Parent = UI_GUI_Color["Frame"]
+	UI_GUI_Color["TextLabel"].LayoutOrder = 0
+	UI_GUI_Color["TextLabel"].Text = Text
+	UI_GUI_Color["TextLabel"].TextSize = 12
+	UI_GUI_Color["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Color["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Color["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Color["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Color["TextButton"].Parent = UI_GUI_Color["Frame"]
+	UI_GUI_Color["TextButton"].BorderSizePixel = 1
+	UI_GUI_Color["TextButton"].Text = ""
+	UI_GUI_Color["TextButton"].BackgroundColor3 = StandartColor
+	UI_GUI_Color["TextButton"].AutoButtonColor = false
+	UI_GUI_Color["TextButton"].Size = UDim2.new(1, -20, 1, -20)
+	UI_GUI_Color["TextButton"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_Color["TextButton"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Color["TextButton"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_Color["UIPadding"].Parent = UI_GUI_Color["Frame"]
+	UI_GUI_Color["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Color["UIPadding"].PaddingRight = UDim.new(0, 10)
+	
+	
+	return {
+		UI_GUI_Color["Frame"],
+		UI_GUI_Color["TextButton"]
+	}
+end
+local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems)
+	local UI_GUI_Tab = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextButton = UI_Table["TextButton"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		ImageLabel = UI_Table["ImageLabel"]:Clone(),
+		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+	}
+
+	UI_GUI_Tab["Frame"].Parent = Object
+	UI_GUI_Tab["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Tab["Frame"].BorderSizePixel = 1
+	UI_GUI_Tab["Frame"].LayoutOrder = 1
+
+	UI_GUI_Tab["TextLabel"].Parent = UI_GUI_Tab["Frame"]
+	UI_GUI_Tab["TextLabel"].LayoutOrder = 0
+	UI_GUI_Tab["TextLabel"].Text = Text
+	UI_GUI_Tab["TextLabel"].TextSize = 12
+	UI_GUI_Tab["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Tab["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Tab["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Tab["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Tab["TextButton"].Parent = UI_GUI_Tab["Frame"]
+	UI_GUI_Tab["TextButton"].BorderSizePixel = 1
+	UI_GUI_Tab["TextButton"].Text = ItemText
+	UI_GUI_Tab["TextButton"].TextSize = 16
+	UI_GUI_Tab["TextButton"].Font = Enum.Font.SourceSansBold
+	UI_GUI_Tab["TextButton"].AutomaticSize = Enum.AutomaticSize.X
+	UI_GUI_Tab["TextButton"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Tab["TextButton"].BackgroundColor3 = Color3.fromRGB(255, 179, 0)
+	UI_GUI_Tab["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_Tab["TextButton"].AutoButtonColor = true
+	UI_GUI_Tab["TextButton"].Size = UDim2.new(0, 40, 1, -20)
+	UI_GUI_Tab["TextButton"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Tab["TextButton"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_Tab["ImageLabel"].Parent = UI_GUI_Tab["TextButton"]
+	UI_GUI_Tab["ImageLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Tab["ImageLabel"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_Tab["ImageLabel"].Image = "rbxassetid://79922404435305"
+	UI_GUI_Tab["ImageLabel"].BackgroundTransparency = 1
+	UI_GUI_Tab["ImageLabel"].ImageColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_Tab["ImageLabel"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Tab["ImageLabel"].Position = UDim2.new(1, 25, 0.5, 0)
+
+	UI_GUI_Tab["UIPadding"].Parent = UI_GUI_Tab["Frame"]
+	UI_GUI_Tab["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Tab["UIPadding"].PaddingRight = UDim.new(0, 10)
+
+	UI_GUI_Tab["UIPaddingText"].Parent = UI_GUI_Tab["TextButton"]
+	UI_GUI_Tab["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
+	UI_GUI_Tab["UIPaddingText"].PaddingRight = UDim.new(0, 25)
+	return {
+		UI_GUI_Tab["Frame"],
+		UI_GUI_Tab["TextButton"]
+	}
+end
+local function CreateInfo(Object, Text)
+	local UI_GUI_Info = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+	}
+
+	UI_GUI_Info["Frame"].Parent = Object
+	UI_GUI_Info["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Info["Frame"].BorderSizePixel = 1
+	UI_GUI_Info["Frame"].LayoutOrder = 1
+
+	UI_GUI_Info["TextLabel"].Parent = UI_GUI_Info["Frame"]
+	UI_GUI_Info["TextLabel"].LayoutOrder = 0
+	UI_GUI_Info["TextLabel"].Text = Text
+	UI_GUI_Info["TextLabel"].TextSize = 12
+	UI_GUI_Info["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Info["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Info["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Info["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Info["UIPadding"].Parent = UI_GUI_Info["Frame"]
+	UI_GUI_Info["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Info["UIPadding"].PaddingRight = UDim.new(0, 10)
+	return UI_GUI_Info["Frame"]
+end
+	
+local UI = {
+	GUI = CreateUI(
+		game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
+		{true, true}, UDim2.new(0, 500, 0, 300), 
+		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
+		{true, false, false}
+	),
+
+}
+
+local UI_MenuBox = {
+	MenuMainBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+	MenuMiscBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+	MenuCombatBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+	MenuFarmBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+	MenuPlayerBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+	MenuSettingsBox = CreateMenuBox(
+		UI["GUI"][3]
+	),
+}
+
+
+local UI_Box = {
+	MenuMainBoxName = CreateBox(
+		UI_MenuBox["MenuMainBox"],
+		"Test"
+	),
+	MenuMiscBoxName = CreateBox(
+		UI_MenuBox["MenuMiscBox"],
+		"Script"
+	),
+	MenuSettingsBoxName = CreateBox(
+		UI_MenuBox["MenuSettingsBox"],
+		"Info"
+	),
+}
+
+
+local UI_Obj = {
+	Switch = CreateSwitch(
+		UI_Box["MenuMainBoxName"],
+		"Switch"
+	),
+	Button = CreateButton(
+		UI_Box["MenuMainBoxName"],
+		"Button",
+		"Open",
+		Color3.fromRGB(0, 255, 0)
+	),
+	TextBox = CreateTextBox(
+		UI_Box["MenuMainBoxName"],
+		"TextBox",
+		"1-255"
+		
+	),
+	Color = CreateColor(
+		UI_Box["MenuMainBoxName"],
+		"Color",
+		Color3.fromRGB(255, 255, 255)
+	),
+	Tab = CreateTab(
+		UI_Box["MenuMainBoxName"],
+		"Tab",
+		"Item or Player"
+	),
+	
+	--Misc
+	
+	OpenInfiniteYield = CreateButton(
+		UI_Box["MenuMiscBoxName"],
+		"Infinite Yield",
+		"Open",
+		Color3.fromRGB(0, 159, 0)
+	),
+	OpenDex = CreateButton(
+		UI_Box["MenuMiscBoxName"],
+		"Dex (Explorer)",
+		"Open",
+		Color3.fromRGB(0, 159, 0)
+	),
+	
+	--Settings
+	
+	InfoVerison = CreateInfo(
+		UI_Box["MenuSettingsBoxName"],
+		"Verison v1.0.0"
+	),
+}
+
+local UI_Menu = {
+	MenuMain = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://116558416127511",
+		"Main",
+		true,
+		UI_MenuBox["MenuMainBox"]
+	),
+	MenuMisc = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://122390149904203",
+		"Misc",
+		false,
+		UI_MenuBox["MenuMiscBox"]
+	),
+	MenuCombat = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://115519534027040",
+		"Combat",
+		false,
+		UI_MenuBox["MenuCombatBox"]
+	),
+	MenuFarm = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://117235363388702",
+		"Farm",
+		false,
+		UI_MenuBox["MenuFarmBox"]
+	),
+	MenuPlayer = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://82195709729963",
+		"Player",
+		false,
+		UI_MenuBox["MenuPlayerBox"]
+	),
+	MenuSettings = CreateMenu(
+		UI["GUI"][2],
+		"rbxassetid://96575338692675",
+		"Settings",
+		false,
+		UI_MenuBox["MenuSettingsBox"]
+	),
+}
+
+UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end)
+
+UI_Obj["OpenDex"].Button.Activated:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/LorekeeperZinnia/Dex/refs/heads/master/main.lua"))()
+end)
