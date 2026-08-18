@@ -33,6 +33,7 @@ UI_Table["TextBox"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 UI_Table["TextBox"].BorderSizePixel = 0
 UI_Table["TextBox"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 UI_Table["TextBox"].TextColor3 = Color3.fromRGB(0, 0, 0)
+UI_Table["TextBox"].ClearTextOnFocus = false
 
 
 UI_Table["ImageLabel"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -97,7 +98,35 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UIListLayoutTwo = UI_Table["UIListLayout"]:Clone(),
 
 		SizeFrame = UI_Table["Frame"]:Clone(),
-
+		
+		
+		TabFrame = UI_Table["Frame"]:Clone(),
+		ScrollingFrameTab = UI_Table["ScrollingFrame"]:Clone(),
+		UIListLayoutTab = UI_Table["UIListLayout"]:Clone(),
+		ButtonTab = UI_Table["TextButton"]:Clone(),
+		
+		ColorFrame = UI_Table["Frame"]:Clone(),
+		--ButtonColorRGB = UI_Table["TextButton"]:Clone(),
+		--ButtonColorSelect = UI_Table["TextButton"]:Clone(),
+		
+		UIListLayoutColor = UI_Table["UIListLayout"]:Clone(),
+		
+		FrameBoxColor = UI_Table["Frame"]:Clone(),
+		FrameBoxColorRGB = UI_Table["Frame"]:Clone(),
+		
+		FrameColorInputBox = UI_Table["Frame"]:Clone(),
+		UIListLayoutInputColor = UI_Table["UIListLayout"]:Clone(),
+		InputRed = UI_Table["TextBox"]:Clone(),
+		InputGreen = UI_Table["TextBox"]:Clone(),
+		InputBlue = UI_Table["TextBox"]:Clone(),
+		
+		InputHEX = UI_Table["TextBox"]:Clone(),
+		
+		FrameColorButtonBox = UI_Table["Frame"]:Clone(),
+		ButtonColorOK = UI_Table["TextButton"]:Clone(),
+		ButtonColorCancel = UI_Table["TextButton"]:Clone(),
+		
+		
 	}
 
 	UI_GUI_Bulider["MainGui"].Parent = GameGuiPath --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
@@ -215,8 +244,8 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 	UI_GUI_Bulider["SizeFrame"].Position = UDim2.new(1, 0, 1, 0)
 	UI_GUI_Bulider["SizeFrame"].Size = UDim2.new(0, 10, 0, 10)
 	UI_GUI_Bulider["SizeFrame"].Transparency = 1
-
-
+	
+	
 	local UIS = game:GetService('UserInputService')
 	local frame = UI_GUI_Bulider["FrameBar"]
 	local GUI = UI_GUI_Bulider["MainFrame"]
@@ -303,10 +332,210 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 			end
 		end)
 	end
+	
+	
+	
 	return {
 		UI_GUI_Bulider["MainGui"], 
 		UI_GUI_Bulider["ScrollingFrameMenu"],
-		UI_GUI_Bulider["FrameBoxScroll"]
+		UI_GUI_Bulider["FrameBoxScroll"],
+		UI_GUI_Bulider["ColorFrame"],
+	}
+end
+
+local function CreateColorSystem(Object)
+	
+	local UI_GUI_ColorSystem = {
+		
+		--all
+		
+		ColorFrame = UI_Table["Frame"]:Clone(),
+		--ButtonColorRGB = UI_Table["TextButton"]:Clone(),
+		--ButtonColorSelect = UI_Table["TextButton"]:Clone(),
+
+		UIListLayoutColor = UI_Table["UIListLayout"]:Clone(),
+
+		FrameBoxColor = UI_Table["Frame"]:Clone(),
+		FrameBoxColorRGB = UI_Table["Frame"]:Clone(),
+
+		FrameColorInputBox = UI_Table["Frame"]:Clone(),
+		UIListLayoutInputColor = UI_Table["UIListLayout"]:Clone(),
+		InputRed = UI_Table["TextBox"]:Clone(),
+		InputGreen = UI_Table["TextBox"]:Clone(),
+		InputBlue = UI_Table["TextBox"]:Clone(),
+
+		InputHEX = UI_Table["TextBox"]:Clone(),
+
+		FrameColorButtonBox = UI_Table["Frame"]:Clone(),
+		ButtonColorOK = UI_Table["TextButton"]:Clone(),
+		ButtonColorCancel = UI_Table["TextButton"]:Clone(),
+	}
+	
+	UI_GUI_ColorSystem["ColorFrame"].Parent = Object
+	UI_GUI_ColorSystem["ColorFrame"].Name = "Color"
+	UI_GUI_ColorSystem["ColorFrame"].Size = UDim2.new(0, 120, 0, 180)
+	UI_GUI_ColorSystem["ColorFrame"].Position = UDim2.new(0.5, 0, 0.5, 0)
+	UI_GUI_ColorSystem["ColorFrame"].AnchorPoint = Vector2.new(0.5, 0.5)
+	UI_GUI_ColorSystem["ColorFrame"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["ColorFrame"].Visible = false
+
+	UI_GUI_ColorSystem["FrameBoxColor"].Parent = UI_GUI_ColorSystem["ColorFrame"]
+	UI_GUI_ColorSystem["FrameBoxColor"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_ColorSystem["FrameBoxColor"].BackgroundTransparency = 1
+
+	UI_GUI_ColorSystem["UIListLayoutColor"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+
+
+	UI_GUI_ColorSystem["FrameBoxColorRGB"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameBoxColorRGB"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_ColorSystem["FrameBoxColorRGB"].SizeConstraint = Enum.SizeConstraint.RelativeXX
+
+	UI_GUI_ColorSystem["FrameColorInputBox"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameColorInputBox"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["FrameColorInputBox"].BackgroundTransparency = 1
+	UI_GUI_ColorSystem["FrameColorInputBox"].Position = UDim2.new(0, 0, 0, 100)
+
+	UI_GUI_ColorSystem["UIListLayoutInputColor"].Parent = UI_GUI_ColorSystem["FrameColorInputBox"]
+	UI_GUI_ColorSystem["UIListLayoutInputColor"].FillDirection = Enum.FillDirection.Horizontal
+
+	UI_GUI_ColorSystem["InputRed"].Parent = UI_GUI_ColorSystem["FrameColorInputBox"]
+	UI_GUI_ColorSystem["InputRed"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["InputRed"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_ColorSystem["InputRed"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
+	UI_GUI_ColorSystem["InputRed"].Text = "255"
+	UI_GUI_ColorSystem["InputRed"].PlaceholderText = "Red"
+	UI_GUI_ColorSystem["InputRed"].TextColor3 = Color3.fromRGB(170, 0, 0)
+	UI_GUI_ColorSystem["InputRed"].TextSize = 16
+	UI_GUI_ColorSystem["InputRed"].Font = Enum.Font.SourceSansBold
+	UI_GUI_ColorSystem["InputRed"].Size = UDim2.new(0.334, 0, 1, 0)
+
+	UI_GUI_ColorSystem["InputGreen"].Parent = UI_GUI_ColorSystem["FrameColorInputBox"]
+	UI_GUI_ColorSystem["InputGreen"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["InputGreen"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_ColorSystem["InputGreen"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
+	UI_GUI_ColorSystem["InputGreen"].Text = "255"
+	UI_GUI_ColorSystem["InputGreen"].PlaceholderText = "Green"
+	UI_GUI_ColorSystem["InputGreen"].TextColor3 = Color3.fromRGB(0, 255, 0)
+	UI_GUI_ColorSystem["InputGreen"].TextSize = 16
+	UI_GUI_ColorSystem["InputGreen"].Font = Enum.Font.SourceSansBold
+	UI_GUI_ColorSystem["InputGreen"].Size = UDim2.new(0.334, 0, 1, 0)
+
+	UI_GUI_ColorSystem["InputBlue"].Parent = UI_GUI_ColorSystem["FrameColorInputBox"]
+	UI_GUI_ColorSystem["InputBlue"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["InputBlue"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_ColorSystem["InputBlue"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
+	UI_GUI_ColorSystem["InputBlue"].Text = "255"
+	UI_GUI_ColorSystem["InputBlue"].PlaceholderText = "Blue"
+	UI_GUI_ColorSystem["InputBlue"].TextColor3 = Color3.fromRGB(0, 0, 170)
+	UI_GUI_ColorSystem["InputBlue"].TextSize = 16
+	UI_GUI_ColorSystem["InputBlue"].Font = Enum.Font.SourceSansBold
+	UI_GUI_ColorSystem["InputBlue"].Size = UDim2.new(0.334, 0, 1, 0)
+
+	UI_GUI_ColorSystem["InputHEX"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["InputHEX"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["InputHEX"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	UI_GUI_ColorSystem["InputHEX"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
+	UI_GUI_ColorSystem["InputHEX"].Text = "ffffff"
+	UI_GUI_ColorSystem["InputHEX"].PlaceholderText = "HEX"
+	UI_GUI_ColorSystem["InputHEX"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_ColorSystem["InputHEX"].TextSize = 16
+	UI_GUI_ColorSystem["InputHEX"].Font = Enum.Font.SourceSansBold
+	UI_GUI_ColorSystem["InputHEX"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["InputHEX"].Position = UDim2.new(0, 0, 140, 0)
+
+	UI_GUI_ColorSystem["FrameColorButtonBox"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameColorButtonBox"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["FrameColorButtonBox"].Position = UDim2.new(0, 0, 160, 0)
+	UI_GUI_ColorSystem["FrameColorButtonBox"].BackgroundTransparency = 1
+
+	UI_GUI_ColorSystem["ButtonColorOK"].Parent = UI_GUI_ColorSystem["FrameColorButtonBox"]
+	UI_GUI_ColorSystem["ButtonColorOK"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["ButtonColorOK"].Size = UDim2.new(0.5, 0, 1, 0)
+	UI_GUI_ColorSystem["ButtonColorOK"].BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+	UI_GUI_ColorSystem["ButtonColorOK"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_ColorSystem["ButtonColorOK"].Text = "OK"
+
+	UI_GUI_ColorSystem["ButtonColorCancel"].Parent = UI_GUI_ColorSystem["FrameColorButtonBox"]
+	UI_GUI_ColorSystem["ButtonColorCancel"].AnchorPoint = Vector2.new(1, 0)
+	UI_GUI_ColorSystem["ButtonColorCancel"].Position = UDim2.new(1, 0, 0, 0)
+	UI_GUI_ColorSystem["ButtonColorCancel"].Size = UDim2.new(0.5, 0, 1, 0)
+	UI_GUI_ColorSystem["ButtonColorCancel"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["ButtonColorCancel"].BackgroundColor3 = Color3.fromRGB(170, 0, 0)
+	UI_GUI_ColorSystem["ButtonColorCancel"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_ColorSystem["ButtonColorCancel"].Text = "Cancel"
+
+	local function ColorRGB()
+		local input = Color3.fromRGB(tonumber(UI_GUI_ColorSystem["InputRed"].Text), tonumber(UI_GUI_ColorSystem["InputGreen"].Text), tonumber(UI_GUI_ColorSystem["InputBlue"].Text)) 
+		UI_GUI_ColorSystem["FrameBoxColorRGB"].BackgroundColor3 = input
+		UI_GUI_ColorSystem["InputHEX"].Text = input:ToHex()
+	end
+
+	local function ColorHEX()
+		local input = Color3.fromHex(UI_GUI_ColorSystem["InputHEX"].Text) 
+		UI_GUI_ColorSystem["FrameBoxColorRGB"].BackgroundColor3 = input
+		UI_GUI_ColorSystem["InputRed"].Text = math.floor(input.R * 255)
+		UI_GUI_ColorSystem["InputGreen"].Text = math.floor(input.G * 255)
+		UI_GUI_ColorSystem["InputBlue"].Text = math.floor(input.B * 255)
+	end
+	
+	local function UpdateColor()
+		local input = UI_GUI_ColorSystem["FrameBoxColorRGB"].BackgroundColor3
+		UI_GUI_ColorSystem["InputRed"].Text = math.floor(input.R * 255)
+		UI_GUI_ColorSystem["InputGreen"].Text = math.floor(input.G * 255)
+		UI_GUI_ColorSystem["InputBlue"].Text = math.floor(input.B * 255)
+		UI_GUI_ColorSystem["InputHEX"].Text = input:ToHex()
+	end
+	
+	UI_GUI_ColorSystem["InputRed"].FocusLost:Connect(ColorRGB)
+	UI_GUI_ColorSystem["InputGreen"].FocusLost:Connect(ColorRGB)
+	UI_GUI_ColorSystem["InputBlue"].FocusLost:Connect(ColorRGB)
+	UI_GUI_ColorSystem["InputHEX"].FocusLost:Connect(ColorHEX)
+	
+	UI_GUI_ColorSystem["FrameBoxColorRGB"].Changed:Connect(UpdateColor)
+	
+	return {
+		UI_GUI_ColorSystem["ColorFrame"],
+		UI_GUI_ColorSystem["FrameBoxColorRGB"],
+		UI_GUI_ColorSystem["ButtonColorOK"],
+		UI_GUI_ColorSystem["ButtonColorCancel"]
+	}
+end
+
+local function CreateTabSystem(Object)
+	local UI_GUI_TabSystem = {
+		TabFrame = UI_Table["Frame"]:Clone(),
+		ScrollingFrameTab = UI_Table["ScrollingFrame"]:Clone(),
+		UIListLayoutTab = UI_Table["UIListLayout"]:Clone(),
+		ButtonTab = UI_Table["TextButton"]:Clone(),
+		SizeConstraint = UI_Table["UISizeConstraint"]:Clone(),
+	}
+	UI_GUI_TabSystem["TabFrame"].Parent = Object
+	UI_GUI_TabSystem["TabFrame"].Name = "Tab"
+	UI_GUI_TabSystem["TabFrame"].BackgroundColor3 = Color3.fromRGB(255, 179, 0)
+	UI_GUI_TabSystem["TabFrame"].AutomaticSize =  Enum.AutomaticSize.Y
+	UI_GUI_TabSystem["TabFrame"].BorderSizePixel = 1
+	UI_GUI_TabSystem["TabFrame"].Visible = false
+	
+	UI_GUI_TabSystem["SizeConstraint"].Parent = UI_GUI_TabSystem["TabFrame"]
+	UI_GUI_TabSystem["SizeConstraint"].MaxSize = Vector2.new(1000000, 320)
+	UI_GUI_TabSystem["SizeConstraint"].MinSize = Vector2.new(0, 20)
+	
+	UI_GUI_TabSystem["ScrollingFrameTab"].Parent = UI_GUI_TabSystem["TabFrame"]
+	UI_GUI_TabSystem["ScrollingFrameTab"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_TabSystem["ScrollingFrameTab"].BackgroundTransparency = 1
+	UI_GUI_TabSystem["ScrollingFrameTab"].AutomaticSize = Enum.AutomaticSize.Y
+	
+	UI_GUI_TabSystem["UIListLayoutTab"].Parent = UI_GUI_TabSystem["ScrollingFrameTab"]
+	
+	UI_GUI_TabSystem["ButtonTab"].BackgroundTransparency = 1
+	UI_GUI_TabSystem["ButtonTab"].Text = ""
+	UI_GUI_TabSystem["ButtonTab"].Size = UDim2.new(1, 0, 0, 20)
+	
+	
+	return {
+		UI_GUI_TabSystem["TabFrame"],
+		UI_GUI_TabSystem["ScrollingFrameTab"],
+		UI_GUI_TabSystem["ButtonTab"]
 	}
 end
 
@@ -603,7 +832,7 @@ local function CreateTextBox(Object, Text, PlaceHolderText)
 		StrValue = UI_GUI_TextBox["StringValue"]
 	}
 end
-local function CreateColor(Object, Text, StandartColor)
+local function CreateColor(Object, Text, StandartColor, UIColor)
 	local UI_GUI_Color = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextButton = UI_Table["TextButton"]:Clone(),
@@ -640,13 +869,31 @@ local function CreateColor(Object, Text, StandartColor)
 	UI_GUI_Color["UIPadding"].PaddingLeft = UDim.new(0, 10)
 	UI_GUI_Color["UIPadding"].PaddingRight = UDim.new(0, 10)
 	
+	UI_GUI_Color["TextButton"].Activated:Connect(function()
+		UIColor[1].Visible = true
+		UIColor[2].BackgroundColor3 = UI_GUI_Color["TextButton"].BackgroundColor3
+		local Fixs = {
+			nil,
+			nil
+		}
+		Fixs[1] = UIColor[3].Activated:Connect(function()
+			UI_GUI_Color["TextButton"].BackgroundColor3 = UIColor[2].BackgroundColor3
+			UIColor[1].Visible = false
+			Fixs[1]:Disconnect()
+		end)
+		Fixs[2] = UIColor[4].Activated:Connect(function()
+			UIColor[1].Visible = false
+			Fixs[2]:Disconnect()
+		end)
+	end)
+	
 	
 	return {
 		UI_GUI_Color["Frame"],
 		UI_GUI_Color["TextButton"]
 	}
 end
-local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems)
+local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
 	local UI_GUI_Tab = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextButton = UI_Table["TextButton"]:Clone(),
@@ -700,6 +947,67 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems)
 	UI_GUI_Tab["UIPaddingText"].Parent = UI_GUI_Tab["TextButton"]
 	UI_GUI_Tab["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
 	UI_GUI_Tab["UIPaddingText"].PaddingRight = UDim.new(0, 25)
+	
+	UI_GUI_Tab["TextButton"].Activated:Connect(function()
+		if SettingsTab ~= "Player" then
+			UITabs[1].Visible = true
+			UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
+			UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
+			for i, v in pairs(UITabs[2]:GetChildren()) do
+				if v:IsA("TextButton") then
+					v:Destroy()
+				end
+			end
+			for i, v in pairs(TabItems) do
+				local Clone = UITabs[3]:Clone()
+				Clone.Text = v
+				Clone.Parent = UITabs[2]
+				local conn
+				conn = Clone.Activated:Connect(function()
+					UI_GUI_Tab["TextButton"].Text = Clone.Text
+					UITabs[1].Visible = false
+					conn:Disconnect()
+				end)
+			end
+			
+		else
+			UITabs[1].Visible = true
+			UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
+			UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
+			for i, v in pairs(UITabs[2]:GetChildren()) do
+				if v:IsA("TextButton") then
+					v:Destroy()
+				end
+			end
+			for i, v in pairs(game:GetService("Players"):GetChildren()) do
+				if i == 1 then
+					local Clone = UITabs[3]:Clone()
+					Clone.Text = "No player"
+					--Clone.Interactable = false
+					Clone.Parent = UITabs[2]
+					local conn
+					conn = Clone.Activated:Connect(function()
+						--UI_GUI_Tab["TextButton"].Text = Clone.Text
+						UITabs[1].Visible = false
+						conn:Disconnect()
+					end)
+				else
+					if game:GetService("Players").LocalPlayer.Name ~= v.Name then
+						local Clone = UITabs[3]:Clone()
+						Clone.Text = v.Name
+						Clone.Parent = UITabs[2]
+						local conn
+						conn = Clone.Activated:Connect(function()
+							UI_GUI_Tab["TextButton"].Text = Clone.Text
+							UITabs[1].Visible = false
+							conn:Disconnect()
+						end)
+					end
+				end
+			end
+		end
+	end)
+	
 	return {
 		UI_GUI_Tab["Frame"],
 		UI_GUI_Tab["TextButton"]
@@ -734,12 +1042,21 @@ end
 	
 local UI = {
 	GUI = CreateUI(
-		game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
+		game:GetSerivce("CoreGui"), --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
 		{true, true}, UDim2.new(0, 500, 0, 300), 
 		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
 		{true, false, false}
 	),
 
+}
+
+local UI_System = {
+	Color = CreateColorSystem(
+		UI["GUI"][1]
+	),
+	Tab = CreateTabSystem(
+		UI["GUI"][1]
+	)
 }
 
 local UI_MenuBox = {
@@ -800,12 +1117,16 @@ local UI_Obj = {
 	Color = CreateColor(
 		UI_Box["MenuMainBoxName"],
 		"Color",
-		Color3.fromRGB(255, 255, 255)
+		Color3.fromRGB(255, 255, 255),
+		UI_System["Color"]
 	),
 	Tab = CreateTab(
 		UI_Box["MenuMainBoxName"],
 		"Tab",
-		"Item or Player"
+		"Item1",
+		"Item",
+		{"Item1", "Item2", "Item3"},
+		UI_System["Tab"]
 	),
 	
 	--Misc
@@ -824,7 +1145,20 @@ local UI_Obj = {
 	),
 	
 	--Settings
-	
+	ColorTest = CreateColor(
+		UI_Box["MenuSettingsBoxName"],
+		"Test Color",
+		Color3.fromRGB(255, 198, 55),
+		UI_System["Color"]
+	),
+	TabTest = CreateTab(
+		UI_Box["MenuSettingsBoxName"],
+		"Tab",
+		"Player",
+		"Player",
+		"",
+		UI_System["Tab"]
+	),
 	InfoVerison = CreateInfo(
 		UI_Box["MenuSettingsBoxName"],
 		"Verison v1.0.0"
