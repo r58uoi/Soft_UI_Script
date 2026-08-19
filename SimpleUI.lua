@@ -524,6 +524,7 @@ local function CreateTabSystem(Object)
 	UI_GUI_TabSystem["ScrollingFrameTab"].Size = UDim2.new(1, 0, 1, 0)
 	UI_GUI_TabSystem["ScrollingFrameTab"].BackgroundTransparency = 1
 	UI_GUI_TabSystem["ScrollingFrameTab"].AutomaticSize = Enum.AutomaticSize.Y
+ UI_GUI_TabSystem["ScrollingFrameTab"].ScrollBarThickness = 0
 	
 	UI_GUI_TabSystem["UIListLayoutTab"].Parent = UI_GUI_TabSystem["ScrollingFrameTab"]
 	
