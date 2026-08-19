@@ -507,6 +507,7 @@ local function CreateTabSystem(Object)
 		ScrollingFrameTab = UI_Table["ScrollingFrame"]:Clone(),
 		UIListLayoutTab = UI_Table["UIListLayout"]:Clone(),
 		ButtonTab = UI_Table["TextButton"]:Clone(),
+		TextButton = UI_Table["TextLabel"]:Clone(),
 		SizeConstraint = UI_Table["UISizeConstraint"]:Clone(),
 	}
 	UI_GUI_TabSystem["TabFrame"].Parent = Object
@@ -524,19 +525,28 @@ local function CreateTabSystem(Object)
 	UI_GUI_TabSystem["ScrollingFrameTab"].Size = UDim2.new(1, 0, 1, 0)
 	UI_GUI_TabSystem["ScrollingFrameTab"].BackgroundTransparency = 1
 	UI_GUI_TabSystem["ScrollingFrameTab"].AutomaticSize = Enum.AutomaticSize.Y
- UI_GUI_TabSystem["ScrollingFrameTab"].ScrollBarThickness = 0
+	UI_GUI_TabSystem["ScrollingFrameTab"].ScrollBarThickness = 0
 	
 	UI_GUI_TabSystem["UIListLayoutTab"].Parent = UI_GUI_TabSystem["ScrollingFrameTab"]
 	
 	UI_GUI_TabSystem["ButtonTab"].BackgroundTransparency = 1
 	UI_GUI_TabSystem["ButtonTab"].Text = ""
+	UI_GUI_TabSystem["ButtonTab"].TextTransparency = 1
 	UI_GUI_TabSystem["ButtonTab"].Size = UDim2.new(1, 0, 0, 20)
+	--UI_GUI_TabSystem["ButtonTab"].AutomaticSize = Enum.AutomaticSize.X
 	
+	UI_GUI_TabSystem["TextButton"].Parent = UI_GUI_TabSystem["ButtonTab"]
+	UI_GUI_TabSystem["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_TabSystem["TextButton"].BackgroundTransparency = 1
+	UI_GUI_TabSystem["TextButton"].Text = ""
+	UI_GUI_TabSystem["TextButton"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_TabSystem["TextButton"].AutomaticSize = Enum.AutomaticSize.X
 	
 	return {
 		UI_GUI_TabSystem["TabFrame"],
 		UI_GUI_TabSystem["ScrollingFrameTab"],
-		UI_GUI_TabSystem["ButtonTab"]
+		UI_GUI_TabSystem["ButtonTab"],
+		UI_GUI_TabSystem["TextButton"]
 	}
 end
 
@@ -840,6 +850,7 @@ local function CreateColor(Object, Text, StandartColor, UIColor)
 		TextLabel = UI_Table["TextLabel"]:Clone(),
 		UIPadding = UI_Table["UIPadding"]:Clone(),
 		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+		ColorValue = Instance.new("Color3Value")
 	}
 
 	UI_GUI_Color["Frame"].Parent = Object
@@ -871,30 +882,36 @@ local function CreateColor(Object, Text, StandartColor, UIColor)
 	UI_GUI_Color["UIPadding"].PaddingRight = UDim.new(0, 10)
 	
 	UI_GUI_Color["TextButton"].Activated:Connect(function()
-		UIColor[1].Visible = true
-		UIColor[2].BackgroundColor3 = UI_GUI_Color["TextButton"].BackgroundColor3
-		local Fixs = {
-			nil,
-			nil
-		}
-		Fixs[1] = UIColor[3].Activated:Connect(function()
-			UI_GUI_Color["TextButton"].BackgroundColor3 = UIColor[2].BackgroundColor3
-			UIColor[1].Visible = false
-			Fixs[1]:Disconnect()
-		end)
-		Fixs[2] = UIColor[4].Activated:Connect(function()
-			UIColor[1].Visible = false
-			Fixs[2]:Disconnect()
-		end)
+		if UIColor[1].Visible == true then
+			UIColor[1].Visible = false	
+		else
+			UIColor[1].Visible = true
+			UIColor[2].BackgroundColor3 = UI_GUI_Color["TextButton"].BackgroundColor3
+			local Fixs = {
+				nil,
+				nil
+			}
+			Fixs[1] = UIColor[3].Activated:Connect(function()
+				UI_GUI_Color["TextButton"].BackgroundColor3 = UIColor[2].BackgroundColor3
+				UI_GUI_Color["ColorValue"].Value = UIColor[2].BackgroundColor3
+				UIColor[1].Visible = false
+				Fixs[1]:Disconnect()
+			end)
+			Fixs[2] = UIColor[4].Activated:Connect(function()
+				UIColor[1].Visible = false
+				Fixs[2]:Disconnect()
+			end)
+		end
 	end)
 	
 	
 	return {
 		UI_GUI_Color["Frame"],
-		UI_GUI_Color["TextButton"]
+		UI_GUI_Color["TextButton"],
+		ClrValue = UI_GUI_Color["ColorValue"]
 	}
 end
-local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
+local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, ColorTab)
 	local UI_GUI_Tab = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextButton = UI_Table["TextButton"]:Clone(),
@@ -902,6 +919,7 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
 		UIPadding = UI_Table["UIPadding"]:Clone(),
 		ImageLabel = UI_Table["ImageLabel"]:Clone(),
 		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+		StringValue = Instance.new("StringValue")
 	}
 
 	UI_GUI_Tab["Frame"].Parent = Object
@@ -925,7 +943,7 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
 	UI_GUI_Tab["TextButton"].Font = Enum.Font.SourceSansBold
 	UI_GUI_Tab["TextButton"].AutomaticSize = Enum.AutomaticSize.X
 	UI_GUI_Tab["TextButton"].TextXAlignment = Enum.TextXAlignment.Left
-	UI_GUI_Tab["TextButton"].BackgroundColor3 = Color3.fromRGB(255, 179, 0)
+	UI_GUI_Tab["TextButton"].BackgroundColor3 = ColorTab --Color3.fromRGB(255, 179, 0)
 	UI_GUI_Tab["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
 	UI_GUI_Tab["TextButton"].AutoButtonColor = true
 	UI_GUI_Tab["TextButton"].Size = UDim2.new(0, 40, 1, -20)
@@ -950,59 +968,102 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
 	UI_GUI_Tab["UIPaddingText"].PaddingRight = UDim.new(0, 25)
 	
 	UI_GUI_Tab["TextButton"].Activated:Connect(function()
-		if SettingsTab ~= "Player" then
-			UITabs[1].Visible = true
-			UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
-			UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
-			for i, v in pairs(UITabs[2]:GetChildren()) do
-				if v:IsA("TextButton") then
-					v:Destroy()
-				end
+		UITabs[1].BackgroundColor3 = ColorTab
+		local function AutoAnimText(ObjectText, ObjectScroll)
+			local TweenService = game:GetService("TweenService")
+			local A = 50
+			local B = (ObjectText.AbsoluteSize.X * 100) / A
+			local C = (1 * B) / 100
+			local D = (C * 30) / 100
+			local TweenInfoOn = TweenInfo.new(C, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 2)
+			local TweenInfoOff = TweenInfo.new(D, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 1)
+			local TweenTableOn = {Position = UDim2.new(0, UITabs[2].AbsoluteSize.X - ObjectText.AbsoluteSize.X, 0, 0)}
+			local TweenTableOff = {Position = UDim2.new(0, 0, 0, 0)}
+			local TweenOn = TweenService:Create(ObjectText, TweenInfoOn, TweenTableOn)
+			local TweenOff = TweenService:Create(ObjectText, TweenInfoOff, TweenTableOff)
+			--task.wait(3)
+			local function On()
+				TweenOn:Play()
 			end
-			for i, v in pairs(TabItems) do
-				local Clone = UITabs[3]:Clone()
-				Clone.Text = v
-				Clone.Parent = UITabs[2]
-				local conn
-				conn = Clone.Activated:Connect(function()
-					UI_GUI_Tab["TextButton"].Text = Clone.Text
-					UITabs[1].Visible = false
-					conn:Disconnect()
-				end)
+			local function Off()
+				TweenOff:Play()
+				TweenOff.Completed:Connect(On)
 			end
-			
+			On()
+			TweenOn.Completed:Connect(Off)
+			--task.wait(1)
+			--TweenOff:Play()
+			--TweenOff.Completed:Wait()
+		end
+		if UITabs[1].Visible == true then
+			UITabs[1].Visible = false
 		else
-			UITabs[1].Visible = true
-			UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
-			UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
-			for i, v in pairs(UITabs[2]:GetChildren()) do
-				if v:IsA("TextButton") then
-					v:Destroy()
+			if SettingsTab ~= "Player" then
+				UITabs[1].Visible = true
+				UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
+				UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
+				for i, v in pairs(UITabs[2]:GetChildren()) do
+					if v:IsA("TextButton") then
+						v:Destroy()
+					end
 				end
-			end
-			for i, v in pairs(game:GetService("Players"):GetChildren()) do
-				if i == 1 then
+				for i, v in pairs(TabItems) do
 					local Clone = UITabs[3]:Clone()
-					Clone.Text = "No player"
-					--Clone.Interactable = false
+					Clone.TextLabel.Text = v
+					UI_GUI_Tab["StringValue"].Value = v
 					Clone.Parent = UITabs[2]
 					local conn
 					conn = Clone.Activated:Connect(function()
-						--UI_GUI_Tab["TextButton"].Text = Clone.Text
+						UI_GUI_Tab["TextButton"].Text = Clone.TextLabel.Text
 						UITabs[1].Visible = false
 						conn:Disconnect()
 					end)
-				else
-					if game:GetService("Players").LocalPlayer.Name ~= v.Name then
+					if Clone.TextLabel.AbsoluteSize.X > UITabs[2].AbsoluteSize.X then
+						AutoAnimText(Clone.TextLabel, UITabs[2])
+					end
+				end
+
+			else
+				UITabs[1].Visible = true
+				UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
+				UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
+				for i, v in pairs(UITabs[2]:GetChildren()) do
+					if v:IsA("TextButton") then
+						v:Destroy()
+					end
+				end
+				for i, v in pairs(game:GetService("Players"):GetChildren()) do
+					if #game:GetService("Players"):GetChildren() == 1 then
 						local Clone = UITabs[3]:Clone()
-						Clone.Text = v.Name
+						Clone.TextLabel.Text = "No player"
+						--Clone.Interactable = false
 						Clone.Parent = UITabs[2]
 						local conn
 						conn = Clone.Activated:Connect(function()
-							UI_GUI_Tab["TextButton"].Text = Clone.Text
+							--UI_GUI_Tab["TextButton"].Text = Clone.Text
 							UITabs[1].Visible = false
 							conn:Disconnect()
 						end)
+						if Clone.TextLabel.AbsoluteSize.X > UITabs[2].AbsoluteSize.X then
+							AutoAnimText(Clone.TextLabel, UITabs[2])
+						end
+					else
+						if game:GetService("Players").LocalPlayer.Name ~= v.Name then
+							local Clone = UITabs[3]:Clone()
+							Clone.TextLabel.Text = v.DisplayName .."(@".. v.Name ..")"
+							Clone.Text = v.Name
+							UI_GUI_Tab["StringValue"].Value = v.Name
+							Clone.Parent = UITabs[2]
+							local conn
+							conn = Clone.Activated:Connect(function()
+								UI_GUI_Tab["TextButton"].Text = Clone.TextLabel.Text
+								UITabs[1].Visible = false
+								conn:Disconnect()
+							end)
+							if Clone.TextLabel.AbsoluteSize.X > UITabs[2].AbsoluteSize.X then
+								AutoAnimText(Clone.TextLabel, UITabs[2])
+							end
+						end
 					end
 				end
 			end
@@ -1011,7 +1072,8 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs)
 	
 	return {
 		UI_GUI_Tab["Frame"],
-		UI_GUI_Tab["TextButton"]
+		UI_GUI_Tab["TextButton"],
+		StrValue = UI_GUI_Tab["StringValue"]
 	}
 end
 local function CreateInfo(Object, Text)
@@ -1043,7 +1105,7 @@ end
 	
 local UI = {
 	GUI = CreateUI(
-		game.CoreGui, --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
+		game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
 		{true, true}, UDim2.new(0, 500, 0, 300), 
 		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
 		{true, false, false}
@@ -1126,8 +1188,9 @@ local UI_Obj = {
 		"Tab",
 		"Item1",
 		"Item",
-		{"Item1", "Item2", "Item3"},
-		UI_System["Tab"]
+		{"Item123456789", "BOOOOOOOOOOOOOOOOOM!!!", "Item3"},
+		UI_System["Tab"],
+		Color3.fromRGB(229, 179, 0)
 	),
 	
 	--Misc
@@ -1158,7 +1221,8 @@ local UI_Obj = {
 		"Player",
 		"Player",
 		"",
-		UI_System["Tab"]
+		UI_System["Tab"],
+		Color3.fromRGB(0, 3, 177)
 	),
 	InfoVerison = CreateInfo(
 		UI_Box["MenuSettingsBoxName"],
@@ -1210,6 +1274,14 @@ local UI_Menu = {
 		UI_MenuBox["MenuSettingsBox"]
 	),
 }
+
+UI_Obj["Tab"].StrValue.Changed:Connect(function()
+	print("Select Tab: ".. UI_Obj["Tab"].StrValue.Value)
+end)
+
+UI_Obj["TabTest"].StrValue.Changed:Connect(function()
+	print("Select Player: ".. UI_Obj["Tab"].StrValue.Value)
+end)
 
 UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
