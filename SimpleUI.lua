@@ -70,7 +70,9 @@ UI_Table["UIShadow"].Transparency = 0.5
 local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, BarButton)
 	local UI_GUI_Bulider = {
 		--GUI
+		
 		MainGui = UI_Table["ScreenGui"]:Clone(),
+		ButtonSimply = UI_Table["ImageButton"]:Clone(),
 		MainFrame = UI_Table["Frame"]:Clone(),
 		UIShadow = UI_Table["UIShadow"]:Clone(),
 		UISizeConstraint = UI_Table["UISizeConstraint"]:Clone(),
@@ -131,9 +133,16 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		
 		
 	}
-
+	
 	UI_GUI_Bulider["MainGui"].Parent = GameGuiPath --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-
+	
+	UI_GUI_Bulider["ButtonSimply"].Parent = UI_GUI_Bulider["MainGui"]
+	UI_GUI_Bulider["ButtonSimply"].BorderSizePixel = 1
+	UI_GUI_Bulider["ButtonSimply"].Size = UDim2.new(0, 50, 0, 50)
+	UI_GUI_Bulider["ButtonSimply"].Position = UDim2.new(0, 100, 0, 100)
+	UI_GUI_Bulider["ButtonSimply"].Image = "rbxassetid://77754544522243"
+	UI_GUI_Bulider["ButtonSimply"].Visible = false
+	
 	UI_GUI_Bulider["MainFrame"].Parent = UI_GUI_Bulider["MainGui"]
 	UI_GUI_Bulider["MainFrame"].Position = PosGui
 	UI_GUI_Bulider["MainFrame"].Size = SizeGui
@@ -210,6 +219,21 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UI_GUI_Bulider["ImageButtonMaxMinSize"].LayoutOrder = 2
 		UI_GUI_Bulider["ImageButtonMaxMinSize"].Image = "rbxassetid://77217748712428"
 		UI_GUI_Bulider["ImageButtonMaxMinSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+		UI_GUI_Bulider["ImageButtonMaxMinSize"].Activated:Connect(function()
+			local SaveAll = {
+				Size = nil,
+				Position = nil
+			}
+			if UI_GUI_Bulider["MainFrame"].Size ~= UDim2.new(1, 0, 1, 0) then
+				SaveAll["Size"] = UI_GUI_Bulider["MainFrame"].Size
+				SaveAll["Position"] = UI_GUI_Bulider["MainFrame"].Position
+				UI_GUI_Bulider["MainFrame"].Size = UDim2.new(1, 0, 1, 0)
+				UI_GUI_Bulider["MainFrame"].Position = UDim2.new(0, 0, 0, 0)
+			else
+				UI_GUI_Bulider["MainFrame"].Size = SaveAll["Size"]
+				UI_GUI_Bulider["MainFrame"].Position = SaveAll["Position"]
+			end
+		end)
 	end
 	if BarButton[3] == true then
 		UI_GUI_Bulider["ImageButtonMiniSize"].Parent = UI_GUI_Bulider["FrameBarTwo"]
@@ -218,6 +242,14 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UI_GUI_Bulider["ImageButtonMiniSize"].LayoutOrder = 1
 		UI_GUI_Bulider["ImageButtonMiniSize"].Image = "rbxassetid://119618391049200"
 		UI_GUI_Bulider["ImageButtonMiniSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
+		UI_GUI_Bulider["ImageButtonMiniSize"].Activated:Connect(function()
+			UI_GUI_Bulider["ImageButtonMiniSize"].Visible = false
+			UI_GUI_Bulider["ButtonSimply"].Visible = true
+		end)
+		UI_GUI_Bulider["ButtonSimply"].Activated:Connect(function()
+			UI_GUI_Bulider["ImageButtonMiniSize"].Visible = true
+			UI_GUI_Bulider["ButtonSimply"].Visible = false
+		end)
 	end
 
 
@@ -252,6 +284,7 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 	local UIS = game:GetService('UserInputService')
 	local frame = UI_GUI_Bulider["FrameBar"]
 	local GUI = UI_GUI_Bulider["MainFrame"]
+	local Button = UI_GUI_Bulider["ButtonSimply"]
 	local Size = UI_GUI_Bulider["SizeFrame"]
 	local dragSpeed = 0.001
 
@@ -281,8 +314,19 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 				end)
 			end
 		end)
-
-
+		
+		Button.InputBegan:Connect(function(input)
+			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+				dragToggle = true
+				dragStart = input.Position
+				startPos = Button.Position
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragToggle = false
+					end
+				end)
+			end
+		end)
 
 		UIS.InputChanged:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
