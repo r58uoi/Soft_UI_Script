@@ -1010,11 +1010,11 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 				for i, v in pairs(TabItems) do
 					local Clone = UITabs[3]:Clone()
 					Clone.TextLabel.Text = v
-					UI_GUI_Tab["StringValue"].Value = v
 					Clone.Parent = UITabs[2]
 					local conn
 					conn = Clone.Activated:Connect(function()
 						UI_GUI_Tab["TextButton"].Text = Clone.TextLabel.Text
+						UI_GUI_Tab["StringValue"].Value = v
 						UITabs[1].Visible = false
 						conn:Disconnect()
 					end)
@@ -1052,11 +1052,11 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 							local Clone = UITabs[3]:Clone()
 							Clone.TextLabel.Text = v.DisplayName .."(@".. v.Name ..")"
 							Clone.Text = v.Name
-							UI_GUI_Tab["StringValue"].Value = v.Name
 							Clone.Parent = UITabs[2]
 							local conn
 							conn = Clone.Activated:Connect(function()
 								UI_GUI_Tab["TextButton"].Text = Clone.TextLabel.Text
+								UI_GUI_Tab["StringValue"].Value = v.Name
 								UITabs[1].Visible = false
 								conn:Disconnect()
 							end)
