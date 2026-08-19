@@ -1186,7 +1186,7 @@ local UI_Obj = {
 	Tab = CreateTab(
 		UI_Box["MenuMainBoxName"],
 		"Tab",
-		"Item1",
+		"None",
 		"Item",
 		{"Item123456789", "BOOOOOOOOOOOOOOOOOM!!!", "Item3"},
 		UI_System["Tab"],
