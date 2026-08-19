@@ -141,6 +141,7 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 	UI_GUI_Bulider["ButtonSimply"].Size = UDim2.new(0, 50, 0, 50)
 	UI_GUI_Bulider["ButtonSimply"].Position = UDim2.new(0, 100, 0, 100)
 	UI_GUI_Bulider["ButtonSimply"].Image = "rbxassetid://77754544522243"
+	UI_GUI_Bulider["ButtonSimply"].ImageColor3 = Color3.fromRGB(255, 255, 255)
 	UI_GUI_Bulider["ButtonSimply"].Visible = false
 	UI_GUI_Bulider["ButtonSimply"].BackgroundTransparency = 0
 	
@@ -243,7 +244,7 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UI_GUI_Bulider["ImageButtonMiniSize"].LayoutOrder = 1
 		UI_GUI_Bulider["ImageButtonMiniSize"].Image = "rbxassetid://119618391049200"
 		UI_GUI_Bulider["ImageButtonMiniSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
-		UI_GUI_Bulider["ImageButtonMiniSize"].Activated:Connect(function()
+		UI_GUI_Bulider["ImageButtonMiniSize"].MouseButton1Click:Connect(function()
 			UI_GUI_Bulider["MainFrame"].Visible = false
 			UI_GUI_Bulider["ButtonSimply"].Visible = true
 		end)
