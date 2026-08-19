@@ -1105,7 +1105,7 @@ end
 	
 local UI = {
 	GUI = CreateUI(
-		game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
+		game.CoreGui, 
 		{true, true}, UDim2.new(0, 500, 0, 300), 
 		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
 		{true, false, false}
