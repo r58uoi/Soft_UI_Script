@@ -1,3 +1,7 @@
+if game.CoreGui:FindFirstChild("SimplyUI") then
+	script:Destroy()
+end
+
 local UI_Table = {
 	ScreenGui = Instance.new("ScreenGui"),
 	BillboardGui = Instance.new("BillboardGui"),
@@ -135,13 +139,14 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 	}
 	
 	UI_GUI_Bulider["MainGui"].Parent = GameGuiPath --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+	UI_GUI_Bulider["MainGui"].Name = "SimplyUI"
 	
 	UI_GUI_Bulider["ButtonSimply"].Parent = UI_GUI_Bulider["MainGui"]
 	UI_GUI_Bulider["ButtonSimply"].BorderSizePixel = 1
 	UI_GUI_Bulider["ButtonSimply"].Size = UDim2.new(0, 50, 0, 50)
 	UI_GUI_Bulider["ButtonSimply"].Position = UDim2.new(0, 100, 0, 100)
 	UI_GUI_Bulider["ButtonSimply"].Image = "rbxassetid://77754544522243"
-	UI_GUI_Bulider["ButtonSimply"].ImageColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_Bulider["ButtonSimply"].ImageColor3 = Color3.fromRGB(0, 0, 0)
 	UI_GUI_Bulider["ButtonSimply"].Visible = false
 	UI_GUI_Bulider["ButtonSimply"].BackgroundTransparency = 0
 	
@@ -231,9 +236,11 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 				SaveAll["Position"] = UI_GUI_Bulider["MainFrame"].Position
 				UI_GUI_Bulider["MainFrame"].Size = UDim2.new(1, 0, 1, 0)
 				UI_GUI_Bulider["MainFrame"].Position = UDim2.new(0, 0, 0, 0)
+				UI_GUI_Bulider["ImageButtonMaxMinSize"].Image = "rbxassetid://137089839848915"
 			else
 				UI_GUI_Bulider["MainFrame"].Size = SaveAll["Size"]
 				UI_GUI_Bulider["MainFrame"].Position = SaveAll["Position"]
+				UI_GUI_Bulider["ImageButtonMaxMinSize"].Image = "rbxassetid://77217748712428"
 			end
 		end)
 	end
@@ -244,13 +251,9 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UI_GUI_Bulider["ImageButtonMiniSize"].LayoutOrder = 1
 		UI_GUI_Bulider["ImageButtonMiniSize"].Image = "rbxassetid://119618391049200"
 		UI_GUI_Bulider["ImageButtonMiniSize"].ImageColor3 = Color3.fromRGB(0, 0, 0)
-		UI_GUI_Bulider["ImageButtonMiniSize"].MouseButton1Click:Connect(function()
+		UI_GUI_Bulider["ImageButtonMiniSize"].Activated:Connect(function()
 			UI_GUI_Bulider["MainFrame"].Visible = false
 			UI_GUI_Bulider["ButtonSimply"].Visible = true
-		end)
-		UI_GUI_Bulider["ButtonSimply"].Activated:Connect(function()
-			UI_GUI_Bulider["MainFrame"].Visible = true
-			UI_GUI_Bulider["ButtonSimply"].Visible = false
 		end)
 	end
 
@@ -327,6 +330,12 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 				dragToggle2 = true
 				dragStart = input.Position
 				startPos = Button.Position
+				task.delay(0.1, function()
+					if not dragToggle2 then
+						UI_GUI_Bulider["MainFrame"].Visible = true
+						UI_GUI_Bulider["ButtonSimply"].Visible = false
+					end
+				end)
 				input.Changed:Connect(function()
 					if input.UserInputState == Enum.UserInputState.End then
 						dragToggle2 = false
