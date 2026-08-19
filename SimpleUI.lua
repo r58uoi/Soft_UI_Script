@@ -11,7 +11,10 @@ local UI_Table = {
 	UIListLayout = Instance.new("UIListLayout"),
 	UIPadding = Instance.new("UIPadding"),
 	UIShadow = Instance.new("UIShadow"),
-	UISizeConstraint = Instance.new("UISizeConstraint")
+	UISizeConstraint = Instance.new("UISizeConstraint"),
+	BoolValue = Instance.new("BoolValue"),
+	StringValue = Instance.new("StringValue"),
+	ColorValue = Instance.new("Color3Value")
 }
 
 UI_Table["Frame"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -683,7 +686,7 @@ local function CreateSwitch(Object, Text)
 		TextButton = UI_Table["TextButton"]:Clone(),
 		TextLabel = UI_Table["TextLabel"]:Clone(),
 		UIPadding = UI_Table["UIPadding"]:Clone(),
-		BoolValue = Instance.new("BoolValue")
+		BoolValue = UI_Table["BoolValue"]:Clone()
 	}
 
 	UI_GUI_Switch["Frame"].Parent = Object
@@ -794,7 +797,7 @@ local function CreateTextBox(Object, Text, PlaceHolderText)
 		TextLabel = UI_Table["TextLabel"]:Clone(),
 		UIPadding = UI_Table["UIPadding"]:Clone(),
 		UIPaddingText = UI_Table["UIPadding"]:Clone(),
-		StringValue = Instance.new("StringValue")
+		StringValue = UI_Table["StringValue"]:Clone()
 	}
 
 	UI_GUI_TextBox["Frame"].Parent = Object
@@ -850,7 +853,7 @@ local function CreateColor(Object, Text, StandartColor, UIColor)
 		TextLabel = UI_Table["TextLabel"]:Clone(),
 		UIPadding = UI_Table["UIPadding"]:Clone(),
 		UIPaddingText = UI_Table["UIPadding"]:Clone(),
-		ColorValue = Instance.new("Color3Value")
+		ColorValue = UI_Table["ColorValue"]:Clone()
 	}
 
 	UI_GUI_Color["Frame"].Parent = Object
@@ -919,7 +922,7 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 		UIPadding = UI_Table["UIPadding"]:Clone(),
 		ImageLabel = UI_Table["ImageLabel"]:Clone(),
 		UIPaddingText = UI_Table["UIPadding"]:Clone(),
-		StringValue = Instance.new("StringValue")
+		StringValue = UI_Table["StringValue"]:Clone()
 	}
 
 	UI_GUI_Tab["Frame"].Parent = Object
@@ -1105,7 +1108,7 @@ end
 	
 local UI = {
 	GUI = CreateUI(
-		game.CoreGui, 
+		game.CoreGui, --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
 		{true, true}, UDim2.new(0, 500, 0, 300), 
 		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
 		{true, false, false}
@@ -1186,7 +1189,7 @@ local UI_Obj = {
 	Tab = CreateTab(
 		UI_Box["MenuMainBoxName"],
 		"Tab",
-		"None",
+		"Item3",
 		"Item",
 		{"Item123456789", "BOOOOOOOOOOOOOOOOOM!!!", "Item3"},
 		UI_System["Tab"],
@@ -1218,7 +1221,7 @@ local UI_Obj = {
 	TabTest = CreateTab(
 		UI_Box["MenuSettingsBoxName"],
 		"Tab",
-		"Player",
+		"Player                 ",
 		"Player",
 		"",
 		UI_System["Tab"],
@@ -1280,7 +1283,7 @@ UI_Obj["Tab"].StrValue.Changed:Connect(function()
 end)
 
 UI_Obj["TabTest"].StrValue.Changed:Connect(function()
-	print("Select Player: ".. UI_Obj["Tab"].StrValue.Value)
+	print("Select Player: ".. UI_Obj["TabTest"].StrValue.Value)
 end)
 
 UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
