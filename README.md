@@ -7,3 +7,4 @@
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/r58uoi/SimplyUI-Script/refs/heads/main/SimpleUI.lua"))()
 ```
+It is currently still in development.
