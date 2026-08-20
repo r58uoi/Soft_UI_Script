@@ -3,5 +3,5 @@
 </p>
 <h2>SimplyUI is a simple open‑source script for Roblox.</h2>
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/r58uoi/SimplyUI-Script/refs/heads/main/SimpleUI.lua"))()
 ```
