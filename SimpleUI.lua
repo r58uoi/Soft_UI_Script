@@ -16,6 +16,8 @@ local UI_Table = {
 	UIPadding = Instance.new("UIPadding"),
 	UIShadow = Instance.new("UIShadow"),
 	UISizeConstraint = Instance.new("UISizeConstraint"),
+	UIDragger = Instance.new("UIDragDetector"),
+	UIGradient = Instance.new("UIGradient"),
 	BoolValue = Instance.new("BoolValue"),
 	StringValue = Instance.new("StringValue"),
 	ColorValue = Instance.new("Color3Value")
@@ -426,6 +428,22 @@ local function CreateColorSystem(Object)
 
 		FrameColorInputBox = UI_Table["Frame"]:Clone(),
 		UIListLayoutInputColor = UI_Table["UIListLayout"]:Clone(),
+		
+		FrameColor = UI_Table["Frame"]:Clone(),
+		UIGradientColor = UI_Table["UIGradient"]:Clone(),
+		FrameDragOne = UI_Table["Frame"]:Clone(),
+		UIDragOne = UI_Table["UIDragger"]:Clone(),
+		
+		FrameColorBlack = UI_Table["Frame"]:Clone(),
+		UIGradientColorBlack = UI_Table["UIGradient"]:Clone(),
+		FrameDragTwo = UI_Table["Frame"]:Clone(),
+		UIDragTwo = UI_Table["UIDragger"]:Clone(),
+		
+		FrameColorWhite = UI_Table["Frame"]:Clone(),
+		UIGradientColorWhite = UI_Table["UIGradient"]:Clone(),
+		FrameDragThree = UI_Table["Frame"]:Clone(),
+		UIDragThree = UI_Table["UIDragger"]:Clone(),
+		
 		InputRed = UI_Table["TextBox"]:Clone(),
 		InputGreen = UI_Table["TextBox"]:Clone(),
 		InputBlue = UI_Table["TextBox"]:Clone(),
@@ -455,7 +473,85 @@ local function CreateColorSystem(Object)
 	UI_GUI_ColorSystem["FrameBoxColorRGB"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
 	UI_GUI_ColorSystem["FrameBoxColorRGB"].Size = UDim2.new(1, 0, 1, 0)
 	UI_GUI_ColorSystem["FrameBoxColorRGB"].SizeConstraint = Enum.SizeConstraint.RelativeXX
+	
+	UI_GUI_ColorSystem["FrameColor"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameColor"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["FrameColor"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["FrameColor"].ClipsDescendants = true
+	
+	UI_GUI_ColorSystem["UIGradientColor"].Parent = UI_GUI_ColorSystem["FrameColor"]
+	UI_GUI_ColorSystem["UIGradientColor"].Color = ColorSequence.new(
+		{
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+			ColorSequenceKeypoint.new(0.16, Color3.fromRGB(255, 255, 0)),
+			ColorSequenceKeypoint.new(0.32, Color3.fromRGB(0, 255, 0)),
+			ColorSequenceKeypoint.new(0.48, Color3.fromRGB(0, 255, 255)),
+			ColorSequenceKeypoint.new(0.60, Color3.fromRGB(0, 0, 255)),
+			ColorSequenceKeypoint.new(0.8, Color3.fromRGB(255, 0, 255)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 4)),
+		}
+	)
+	
+	UI_GUI_ColorSystem["FrameDragOne"].Parent = UI_GUI_ColorSystem["FrameColor"]
+	UI_GUI_ColorSystem["FrameDragOne"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_ColorSystem["FrameDragOne"].AnchorPoint = Vector2.new(0.5, 0)
+	UI_GUI_ColorSystem["FrameDragOne"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_ColorSystem["FrameDragOne"].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	
+	UI_GUI_ColorSystem["UIDragOne"].Parent = UI_GUI_ColorSystem["FrameDragOne"]
+	UI_GUI_ColorSystem["UIDragOne"].BoundingUI = UI_GUI_ColorSystem["FrameColor"]
+	UI_GUI_ColorSystem["UIDragOne"].DragStyle = Enum.UIDragDetectorDragStyle.TranslateLine
+	UI_GUI_ColorSystem["UIDragOne"].ResponseStyle = Enum.UIDragDetectorResponseStyle.Scale
+	UI_GUI_ColorSystem["UIDragOne"].BoundingBehavior = Enum.UIDragDetectorBoundingBehavior.HitPoint
+	
+	UI_GUI_ColorSystem["FrameColorBlack"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameColorBlack"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["FrameColorBlack"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["FrameColorBlack"].ClipsDescendants = true
+	
+	UI_GUI_ColorSystem["UIGradientColorBlack"].Parent = UI_GUI_ColorSystem["FrameColorBlack"]
+	UI_GUI_ColorSystem["UIGradientColorBlack"].Color = ColorSequence.new(
+			Color3.fromRGB(0, 0, 0),
+			Color3.fromRGB(0, 0, 0)
+	)
 
+	UI_GUI_ColorSystem["FrameDragTwo"].Parent = UI_GUI_ColorSystem["FrameColorBlack"]
+	UI_GUI_ColorSystem["FrameDragTwo"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_ColorSystem["FrameDragTwo"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_ColorSystem["FrameDragTwo"].Position = UDim2.new(1, 0, 0, 0)
+	UI_GUI_ColorSystem["FrameDragTwo"].AnchorPoint = Vector2.new(0.5, 0)
+	UI_GUI_ColorSystem["FrameDragTwo"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+	UI_GUI_ColorSystem["UIDragTwo"].Parent = UI_GUI_ColorSystem["FrameDragTwo"]
+	UI_GUI_ColorSystem["UIDragTwo"].BoundingUI = UI_GUI_ColorSystem["FrameColorBlack"]
+	UI_GUI_ColorSystem["UIDragTwo"].DragStyle = Enum.UIDragDetectorDragStyle.TranslateLine
+	UI_GUI_ColorSystem["UIDragTwo"].ResponseStyle = Enum.UIDragDetectorResponseStyle.Scale
+	UI_GUI_ColorSystem["UIDragTwo"].BoundingBehavior = Enum.UIDragDetectorBoundingBehavior.HitPoint
+	
+	UI_GUI_ColorSystem["FrameColorWhite"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
+	UI_GUI_ColorSystem["FrameColorWhite"].Size = UDim2.new(1, 0, 0, 20)
+	UI_GUI_ColorSystem["FrameColorWhite"].BorderSizePixel = 1
+	UI_GUI_ColorSystem["FrameColorWhite"].ClipsDescendants = true
+	
+	UI_GUI_ColorSystem["UIGradientColorWhite"].Parent = UI_GUI_ColorSystem["FrameColorWhite"]
+	UI_GUI_ColorSystem["UIGradientColorWhite"].Color = ColorSequence.new(
+		Color3.fromRGB(255, 255, 255),
+		Color3.fromRGB(255, 255, 255)
+	)
+
+	UI_GUI_ColorSystem["FrameDragThree"].Parent = UI_GUI_ColorSystem["FrameColorWhite"]
+	UI_GUI_ColorSystem["FrameDragThree"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_ColorSystem["FrameDragThree"].Position = UDim2.new(1, 0, 0, 0)
+	UI_GUI_ColorSystem["FrameDragThree"].AnchorPoint = Vector2.new(0.5, 0)
+	UI_GUI_ColorSystem["FrameDragThree"].SizeConstraint = Enum.SizeConstraint.RelativeYY
+	UI_GUI_ColorSystem["FrameDragThree"].BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+
+	UI_GUI_ColorSystem["UIDragThree"].Parent = UI_GUI_ColorSystem["FrameDragThree"]
+	UI_GUI_ColorSystem["UIDragThree"].BoundingUI = UI_GUI_ColorSystem["FrameColorWhite"]
+	UI_GUI_ColorSystem["UIDragThree"].DragStyle = Enum.UIDragDetectorDragStyle.TranslateLine
+	UI_GUI_ColorSystem["UIDragThree"].ResponseStyle = Enum.UIDragDetectorResponseStyle.Scale
+	UI_GUI_ColorSystem["UIDragThree"].BoundingBehavior = Enum.UIDragDetectorBoundingBehavior.HitPoint
+	
 	UI_GUI_ColorSystem["FrameColorInputBox"].Parent = UI_GUI_ColorSystem["FrameBoxColor"]
 	UI_GUI_ColorSystem["FrameColorInputBox"].Size = UDim2.new(1, 0, 0, 20)
 	UI_GUI_ColorSystem["FrameColorInputBox"].BackgroundTransparency = 1
@@ -544,12 +640,28 @@ local function CreateColorSystem(Object)
 		UI_GUI_ColorSystem["InputBlue"].Text = math.floor(input.B * 255)
 	end
 	
+	local function UpdateDrag()
+		UI_GUI_ColorSystem["FrameBoxColorRGB"].BackgroundColor3 = Color3.fromHSV(UI_GUI_ColorSystem["FrameDragOne"].Position.X.Scale, UI_GUI_ColorSystem["FrameDragThree"].Position.X.Scale, UI_GUI_ColorSystem["FrameDragTwo"].Position.X.Scale)
+		UI_GUI_ColorSystem["UIGradientColorWhite"].Color = ColorSequence.new(
+			Color3.fromRGB(255, 255, 255),
+			Color3.fromHSV(UI_GUI_ColorSystem["FrameDragOne"].Position.X.Scale, 1, 1)
+		)
+		UI_GUI_ColorSystem["UIGradientColorBlack"].Color = ColorSequence.new(
+			Color3.fromRGB(0, 0, 0),
+			Color3.fromHSV(UI_GUI_ColorSystem["FrameDragOne"].Position.X.Scale, 1, 1)
+		)
+	end
+	
 	local function UpdateColor()
 		local input = UI_GUI_ColorSystem["FrameBoxColorRGB"].BackgroundColor3
 		UI_GUI_ColorSystem["InputRed"].Text = math.floor(input.R * 255)
 		UI_GUI_ColorSystem["InputGreen"].Text = math.floor(input.G * 255)
 		UI_GUI_ColorSystem["InputBlue"].Text = math.floor(input.B * 255)
 		UI_GUI_ColorSystem["InputHEX"].Text = input:ToHex()
+		local H, S, V = input:ToHSV()
+		UI_GUI_ColorSystem["FrameDragOne"].Position = UDim2.new(H, 0, 0, 0)
+		UI_GUI_ColorSystem["FrameDragTwo"].Position = UDim2.new(V, 0, 0, 0)
+		UI_GUI_ColorSystem["FrameDragThree"].Position = UDim2.new(S, 0, 0, 0)
 	end
 	
 	UI_GUI_ColorSystem["InputRed"].FocusLost:Connect(ColorRGB)
@@ -558,6 +670,50 @@ local function CreateColorSystem(Object)
 	UI_GUI_ColorSystem["InputHEX"].FocusLost:Connect(ColorHEX)
 	
 	UI_GUI_ColorSystem["FrameBoxColorRGB"].Changed:Connect(UpdateColor)
+	
+	UI_GUI_ColorSystem["FrameDragOne"].Changed:Connect(UpdateDrag)
+	UI_GUI_ColorSystem["FrameDragTwo"].Changed:Connect(UpdateDrag)
+	UI_GUI_ColorSystem["FrameDragThree"].Changed:Connect(UpdateDrag)
+	
+	local UIS = game:GetService('UserInputService')
+	local frame = UI_GUI_ColorSystem["FrameBoxColorRGB"]
+	local GUI = UI_GUI_ColorSystem["ColorFrame"]
+	local dragSpeed = 0.001
+	
+	local dragToggle = nil
+	local dragStart = nil
+	local startPos = nil
+
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(GUI, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
+
+
+
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = GUI.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+
+
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
 	
 	return {
 		UI_GUI_ColorSystem["ColorFrame"],
@@ -1061,13 +1217,26 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 			--TweenOff:Play()
 			--TweenOff.Completed:Wait()
 		end
+		local function AutoPos()
+			--UITabs[1].Position = UDim2.new()
+			--UITabs[1].Size = UDim2.new()
+			--UITabs[1].AnchorPoint = Vector2.new(0, 0.5)
+			UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
+			UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
+		end
 		if UITabs[1].Visible == true then
 			UITabs[1].Visible = false
 		else
+			UITabs[1].Visible = true
+			local Test
+			Test = game:GetService("RunService").RenderStepped:Connect(function()
+				AutoPos()
+				if UITabs[1].Visible == false then
+					Test:Disconnect()
+				end
+			end)
+			AutoPos()
 			if SettingsTab ~= "Player" then
-				UITabs[1].Visible = true
-				UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
-				UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
 				for i, v in pairs(UITabs[2]:GetChildren()) do
 					if v:IsA("TextButton") then
 						v:Destroy()
@@ -1090,9 +1259,6 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 				end
 
 			else
-				UITabs[1].Visible = true
-				UITabs[1].Position = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsolutePosition.X, 0, UI_GUI_Tab["TextButton"].AbsolutePosition.Y + UI_GUI_Tab["TextButton"].AbsoluteSize.Y)
-				UITabs[1].Size = UDim2.new(0, UI_GUI_Tab["TextButton"].AbsoluteSize.X, 0, 0)
 				for i, v in pairs(UITabs[2]:GetChildren()) do
 					if v:IsA("TextButton") then
 						v:Destroy()
