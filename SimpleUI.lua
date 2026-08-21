@@ -1309,7 +1309,7 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 	}
 end
 
-local function CreateKey(Object, Text, TextButton)
+local function CreateKey(Object, Text, TextKey)
 	local UI_GUI_Key = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextButton = UI_Table["TextButton"]:Clone(),
@@ -1336,7 +1336,7 @@ local function CreateKey(Object, Text, TextButton)
 
 	UI_GUI_Key["TextButton"].Parent = UI_GUI_Key["Frame"]
 	UI_GUI_Key["TextButton"].BorderSizePixel = 1
-	UI_GUI_Key["TextButton"].Text = TextButton
+	UI_GUI_Key["TextButton"].Text = TextKey
 	UI_GUI_Key["TextButton"].BackgroundColor3 = Color3.fromRGB(0, 111, 162)
 	UI_GUI_Key["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
 	UI_GUI_Key["TextButton"].TextSize = 16
@@ -1351,7 +1351,7 @@ local function CreateKey(Object, Text, TextButton)
 	UI_GUI_Key["UIPadding"].PaddingLeft = UDim.new(0, 10)
 	UI_GUI_Key["UIPadding"].PaddingRight = UDim.new(0, 10)
 	
-	UI_GUI_Key["StringValue"].Value = TextButton
+	UI_GUI_Key["StringValue"].Value = TextKey
 	
 	UI_GUI_Key["UIPaddingText"].Parent = UI_GUI_Key["TextButton"]
 	UI_GUI_Key["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
@@ -1502,7 +1502,7 @@ local UI_Obj = {
 	key = CreateKey(
 		UI_Box["MenuMainBoxName"],
 		"Key",
-		"E"
+		Enum.KeyCode.E.Name
 	),
 	
 	--Misc
@@ -1596,7 +1596,13 @@ UI_Obj["TabTest"].StrValue.Changed:Connect(function()
 end)
 
 UI_Obj["key"].StrValue.Changed:Connect(function()
-	print("Click key: ".. UI_Obj["key"].StrValue.Value)
+	print("Click changed key: ".. UI_Obj["key"].StrValue.Value)
+end)
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode[UI_Obj["key"].StrValue.Value] then
+		print("Press key: ".. UI_Obj["key"].StrValue.Value)
+	end
 end)
 
 UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
