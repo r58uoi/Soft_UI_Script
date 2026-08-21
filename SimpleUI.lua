@@ -1009,7 +1009,7 @@ local function CreateButton(Object, Text, TextButton, ColorButton)
 		Button = UI_GUI_Button["TextButton"]
 	}
 end
-local function CreateTextBox(Object, Text, PlaceHolderText)
+local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, Range)
 	local UI_GUI_TextBox = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextBox = UI_Table["TextBox"]:Clone(),
@@ -1037,7 +1037,7 @@ local function CreateTextBox(Object, Text, PlaceHolderText)
 	UI_GUI_TextBox["TextBox"].BorderSizePixel = 1
 	UI_GUI_TextBox["TextBox"].BackgroundColor3 = Color3.fromRGB(150, 150, 150)
 	UI_GUI_TextBox["TextBox"].PlaceholderColor3 = Color3.fromRGB(81, 81, 81)
-	UI_GUI_TextBox["TextBox"].Text = ""
+	UI_GUI_TextBox["TextBox"].Text = TextBox
 	UI_GUI_TextBox["TextBox"].PlaceholderText = PlaceHolderText
 	UI_GUI_TextBox["TextBox"].TextColor3 = Color3.fromRGB(255, 255, 255)
 	UI_GUI_TextBox["TextBox"].TextSize = 16
@@ -1056,7 +1056,21 @@ local function CreateTextBox(Object, Text, PlaceHolderText)
 	UI_GUI_TextBox["UIPaddingText"].PaddingRight = UDim.new(0, 5)
 	
 	UI_GUI_TextBox["TextBox"].FocusLost:Connect(function()
-		UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+		
+		if ModeText == "int" or ModeText == "float" then
+			if not Range then
+				UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+			else
+				if not (tonumber(UI_GUI_TextBox["TextBox"].Text) >= Range[1] and tonumber(UI_GUI_TextBox["TextBox"].Text) <= Range[2]) then
+					UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
+				else
+					UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+				end
+			
+			end
+		elseif ModeText == "string" then
+			UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+		end
 	end)
 	
 	return {
@@ -1481,7 +1495,10 @@ local UI_Obj = {
 	TextBox = CreateTextBox(
 		UI_Box["MenuMainBoxName"],
 		"TextBox",
-		"1-255"
+		"1-255",
+		"",
+		"int",
+		{1, 255}
 		
 	),
 	Color = CreateColor(
