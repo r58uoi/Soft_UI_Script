@@ -1351,7 +1351,7 @@ local function CreateKey(Object, Text, TextButton)
 	UI_GUI_Key["UIPadding"].PaddingLeft = UDim.new(0, 10)
 	UI_GUI_Key["UIPadding"].PaddingRight = UDim.new(0, 10)
 	
-	UI_GUI_Key["StringValue"].Value = Text
+	UI_GUI_Key["StringValue"].Value = TextButton
 	
 	UI_GUI_Key["UIPaddingText"].Parent = UI_GUI_Key["TextButton"]
 	UI_GUI_Key["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
@@ -1363,10 +1363,17 @@ local function CreateKey(Object, Text, TextButton)
 			UI_GUI_Key["Bool"] = true
 			local conn
 			conn = game:GetService("UserInputService").InputBegan:Connect(function(input)
-				UI_GUI_Key["TextButton"].Text = input.KeyCode
-				UI_GUI_Key["StringValue"].Value = input.KeyCode
-				UI_GUI_Key["Bool"] = false
-				conn:Disconnect()
+				if input.UserInputType == Enum.UserInputType.Keyboard then
+					UI_GUI_Key["TextButton"].Text = input.KeyCode.Name
+					UI_GUI_Key["StringValue"].Value = input.KeyCode.Name
+					UI_GUI_Key["Bool"] = false
+					conn:Disconnect()
+				elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 or input.UserInputType == Enum.UserInputType.MouseButton3 then
+					UI_GUI_Key["TextButton"].Text = input.KeyCode.Name
+					UI_GUI_Key["StringValue"].Value = input.KeyCode.Name
+					UI_GUI_Key["Bool"] = false
+					conn:Disconnect()
+				end
 			end)
 		end
 	end)
