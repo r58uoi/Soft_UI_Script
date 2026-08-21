@@ -1308,6 +1308,74 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 		StrValue = UI_GUI_Tab["StringValue"]
 	}
 end
+
+local function CreateKey(Object, Text, TextButton)
+	local UI_GUI_Key = {
+		Frame = UI_Table["Frame"]:Clone(),
+		TextButton = UI_Table["TextButton"]:Clone(),
+		TextLabel = UI_Table["TextLabel"]:Clone(),
+		UIPadding = UI_Table["UIPadding"]:Clone(),
+		UIPaddingText = UI_Table["UIPadding"]:Clone(),
+		StringValue = UI_Table["StringValue"]:Clone(),
+		Bool = false
+	}
+
+	UI_GUI_Key["Frame"].Parent = Object
+	UI_GUI_Key["Frame"].Size = UDim2.new(1, 0, 0, 40)
+	UI_GUI_Key["Frame"].BorderSizePixel = 1
+	UI_GUI_Key["Frame"].LayoutOrder = 1
+
+	UI_GUI_Key["TextLabel"].Parent = UI_GUI_Key["Frame"]
+	UI_GUI_Key["TextLabel"].LayoutOrder = 0
+	UI_GUI_Key["TextLabel"].Text = Text
+	UI_GUI_Key["TextLabel"].TextSize = 12
+	UI_GUI_Key["TextLabel"].Size = UDim2.new(1, 0, 1, 0)
+	UI_GUI_Key["TextLabel"].TextXAlignment = Enum.TextXAlignment.Left
+	UI_GUI_Key["TextLabel"].AnchorPoint = Vector2.new(0, 0.5)
+	UI_GUI_Key["TextLabel"].Position = UDim2.new(0, 0, 0.5, 0)
+
+	UI_GUI_Key["TextButton"].Parent = UI_GUI_Key["Frame"]
+	UI_GUI_Key["TextButton"].BorderSizePixel = 1
+	UI_GUI_Key["TextButton"].Text = TextButton
+	UI_GUI_Key["TextButton"].BackgroundColor3 = Color3.fromRGB(0, 111, 162)
+	UI_GUI_Key["TextButton"].TextColor3 = Color3.fromRGB(255, 255, 255)
+	UI_GUI_Key["TextButton"].TextSize = 16
+	UI_GUI_Key["TextButton"].Font = Enum.Font.SourceSansBold
+	UI_GUI_Key["TextButton"].AutomaticSize = Enum.AutomaticSize.X
+	UI_GUI_Key["TextButton"].AutoButtonColor = true
+	UI_GUI_Key["TextButton"].Size = UDim2.new(0, 0, 1, -20)
+	UI_GUI_Key["TextButton"].AnchorPoint = Vector2.new(1, 0.5)
+	UI_GUI_Key["TextButton"].Position = UDim2.new(1, 0, 0.5, 0)
+
+	UI_GUI_Key["UIPadding"].Parent = UI_GUI_Key["Frame"]
+	UI_GUI_Key["UIPadding"].PaddingLeft = UDim.new(0, 10)
+	UI_GUI_Key["UIPadding"].PaddingRight = UDim.new(0, 10)
+	
+	UI_GUI_Key["StringValue"].Value = Text
+	
+	UI_GUI_Key["UIPaddingText"].Parent = UI_GUI_Key["TextButton"]
+	UI_GUI_Key["UIPaddingText"].PaddingLeft = UDim.new(0, 5)
+	UI_GUI_Key["UIPaddingText"].PaddingRight = UDim.new(0, 5)
+	
+	UI_GUI_Key["TextButton"].Activated:Connect(function()
+		if not UI_GUI_Key["Bool"] then
+			UI_GUI_Key["TextButton"].Text = "<Press key...>"
+			UI_GUI_Key["Bool"] = true
+			local conn
+			conn = game:GetService("UserInputService").InputBegan:Connect(function(input)
+				UI_GUI_Key["TextButton"].Text = input.KeyCode
+				UI_GUI_Key["StringValue"].Value = input.KeyCode
+				UI_GUI_Key["Bool"] = false
+				conn:Disconnect()
+			end)
+		end
+	end)
+	return {
+		UI_GUI_Key["Frame"],
+		StrValue = UI_GUI_Key["StringValue"]
+	}
+end
+
 local function CreateInfo(Object, Text)
 	local UI_GUI_Info = {
 		Frame = UI_Table["Frame"]:Clone(),
@@ -1424,6 +1492,11 @@ local UI_Obj = {
 		UI_System["Tab"],
 		Color3.fromRGB(229, 179, 0)
 	),
+	key = CreateKey(
+		UI_Box["MenuMainBoxName"],
+		"Key",
+		"E"
+	),
 	
 	--Misc
 	
@@ -1513,6 +1586,10 @@ end)
 
 UI_Obj["TabTest"].StrValue.Changed:Connect(function()
 	print("Select Player: ".. UI_Obj["TabTest"].StrValue.Value)
+end)
+
+UI_Obj["key"].StrValue.Changed:Connect(function()
+	print("Click key: ".. UI_Obj["key"].StrValue.Value)
 end)
 
 UI_Obj["OpenInfiniteYield"].Button.Activated:Connect(function()
