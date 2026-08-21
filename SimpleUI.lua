@@ -79,7 +79,7 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		
 		MainGui = UI_Table["ScreenGui"]:Clone(),
 		ButtonSimply = UI_Table["ImageButton"]:Clone(),
-		MainFrame = UI_Table["Frame"]:Clone(),
+		MainFrame = UI_Table["CanvasGroup"]:Clone(),
 		UIShadow = UI_Table["UIShadow"]:Clone(),
 		UISizeConstraint = UI_Table["UISizeConstraint"]:Clone(),
 
@@ -408,6 +408,7 @@ local function CreateUI(GameGuiPath, SettingsGui, SizeGui, PosGui, MinSizeGui, B
 		UI_GUI_Bulider["ScrollingFrameMenu"],
 		UI_GUI_Bulider["FrameBoxScroll"],
 		UI_GUI_Bulider["ColorFrame"],
+		UI_GUI_Bulider["MainFrame"],
 	}
 end
 
@@ -1009,7 +1010,7 @@ local function CreateButton(Object, Text, TextButton, ColorButton)
 		Button = UI_GUI_Button["TextButton"]
 	}
 end
-local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, Range)
+local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, Range, NullText)
 	local UI_GUI_TextBox = {
 		Frame = UI_Table["Frame"]:Clone(),
 		TextBox = UI_Table["TextBox"]:Clone(),
@@ -1061,12 +1062,18 @@ local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, R
 			if not Range then
 				UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
 			else
-				if not (tonumber(UI_GUI_TextBox["TextBox"].Text) >= Range[1] and tonumber(UI_GUI_TextBox["TextBox"].Text) <= Range[2]) then
+				local succes, result = pcall(function()
+					if not (tonumber(UI_GUI_TextBox["TextBox"].Text) >= Range[1] and tonumber(UI_GUI_TextBox["TextBox"].Text) <= Range[2]) then
+						UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
+					elseif UI_GUI_TextBox["TextBox"].Text == "" and NullText == true then
+						UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
+					else
+						UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
+					end
+				end)
+				if not succes then
 					UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
-				else
-					UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
 				end
-			
 			end
 		elseif ModeText == "string" then
 			UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
@@ -1483,37 +1490,38 @@ local UI_Box = {
 
 local UI_Obj = {
 	Switch = CreateSwitch(
-		UI_Box["MenuMainBoxName"],
-		"Switch"
+		UI_Box["MenuMainBoxName"], -- Object
+		"Switch" -- Text
 	),
 	Button = CreateButton(
-		UI_Box["MenuMainBoxName"],
+		UI_Box["MenuMainBoxName"], -- Object
 		"Button",
 		"Open",
 		Color3.fromRGB(0, 255, 0)
 	),
 	TextBox = CreateTextBox(
-		UI_Box["MenuMainBoxName"],
+		UI_Box["MenuMainBoxName"], -- Object
 		"TextBox",
 		"1-255",
-		"",
-		"int",
-		{1, 255}
+		"1",
+		"str", -- str, int, float
+		{1, 255},
+		false
 		
 	),
 	Color = CreateColor(
-		UI_Box["MenuMainBoxName"],
+		UI_Box["MenuMainBoxName"], -- Object
 		"Color",
 		Color3.fromRGB(255, 255, 255),
 		UI_System["Color"]
 	),
 	Tab = CreateTab(
-		UI_Box["MenuMainBoxName"],
-		"Tab",
-		"Item3",
-		"Item",
-		{"Item123456789", "BOOOOOOOOOOOOOOOOOM!!!", "Item3"},
-		UI_System["Tab"],
+		UI_Box["MenuMainBoxName"], -- Object
+		"Tab", -- Text
+		"Item3", -- Main table
+		"Item", -- Item, Player
+		{"Item123456789", "BOOOOOOOOOOOOOOOOOM!!!", "Item3"}, -- Table
+		UI_System["Tab"], -- System (Be sure to add this value!)
 		Color3.fromRGB(229, 179, 0)
 	),
 	key = CreateKey(
@@ -1544,6 +1552,17 @@ local UI_Obj = {
 		Color3.fromRGB(255, 198, 55),
 		UI_System["Color"]
 	),
+	
+	TransTextBox = CreateTextBox(
+		UI_Box["MenuSettingsBoxName"], -- Object
+		"TransWindow",
+		"0-0.9",
+		"0",
+		"float", -- str, int, float
+		{0, 0.9},
+		true
+	),
+	
 	TabTest = CreateTab(
 		UI_Box["MenuSettingsBoxName"],
 		"Tab",
@@ -1603,6 +1622,22 @@ local UI_Menu = {
 		UI_MenuBox["MenuSettingsBox"]
 	),
 }
+
+UI_Obj["Switch"].Bool.Changed:Connect(function()
+	print(UI_Obj["Switch"].Bool.Value)
+end)
+
+UI_Obj["Button"].Button.Activated:Connect(function()
+	print("Press Button")
+end)
+
+UI_Obj["TextBox"].StrValue.Changed:Connect(function()
+	print("Edit text: ".. UI_Obj["TextBox"].StrValue.Value)
+end)
+
+UI_Obj["Color"].ClrValue.Changed:Connect(function()
+	print("Edit color: ".. math.floor(UI_Obj["Color"].ClrValue.Value.R * 255) ..",".. math.floor(UI_Obj["Color"].ClrValue.Value.G * 255) ..",".. math.floor(UI_Obj["Color"].ClrValue.Value.B * 255))
+end)
 
 UI_Obj["Tab"].StrValue.Changed:Connect(function()
 	print("Select Tab: ".. UI_Obj["Tab"].StrValue.Value)
