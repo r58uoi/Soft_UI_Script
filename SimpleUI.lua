@@ -24,6 +24,8 @@ local UI_Table = {
 	ColorValue = Instance.new("Color3Value")
 }
 
+UI_Table["ScreenGui"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
 UI_Table["Frame"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 UI_Table["Frame"].BorderSizePixel = 0
 UI_Table["Frame"].BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1251,7 +1253,7 @@ local function CreateTab(Object, Text, ItemText, SettingsTab, TabItems, UITabs, 
 		else
 			UITabs[1].Visible = true
 			local Test
-			Test = game:GetService("RunService").RenderStepped:Connect(function()
+			Test = UI_GUI_Tab["TextButton"].Changed:Connect(function()
 				AutoPos()
 				if UITabs[1].Visible == false then
 					Test:Disconnect()
@@ -1667,5 +1669,5 @@ UI_Obj["OpenDex"].Button.Activated:Connect(function()
 end)
 
 UI_Obj["TransTextBox"].StrValue.Changed:Connect(function()
-	UI["GUI"][5].GroupTransparency = UI_Obj["TransTextBox"].StrValue.Value
+	UI["GUI"][5].GroupTransparency = tonumber(UI_Obj["TransTextBox"].StrValue.Value)
 end)
