@@ -1437,14 +1437,16 @@ end
 local UI = {
 	GUI = CreateUI(
 		game.CoreGui, --game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"), 
-		{true, true}, UDim2.new(0, 500, 0, 300), 
-		UDim2.new(0, 100, 0, 100), Vector2.new(300, 100), 
-		{true, true, true}
+		{true, true}, -- Size and Position Window
+		UDim2.new(0, 500, 0, 300), -- Main Size
+		UDim2.new(0, 100, 0, 100), -- Main Position
+		Vector2.new(300, 100),  -- MinSize
+		{true, true, true} -- 1. MiniSize, 2. MaxSize, 3. Close
 	),
 
 }
 
-local UI_System = {
+local UI_System = { -- Be sure to add!!!
 	Color = CreateColorSystem(
 		UI["GUI"][1]
 	),
