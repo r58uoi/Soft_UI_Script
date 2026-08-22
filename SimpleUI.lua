@@ -1059,7 +1059,7 @@ local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, R
 	
 	UI_GUI_TextBox["TextBox"].FocusLost:Connect(function()
 		
-		if ModeText == "int" then
+		if ModeText == "int" or ModeText == "float" then
 			if not Range then
 				UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
 			else
@@ -1075,19 +1075,6 @@ local function CreateTextBox(Object, Text, PlaceHolderText, TextBox, ModeText, R
 				if not succes then
 					UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
 				end
-			end
-		elseif  ModeText == "float" then
-			local succes, result = pcall(function()
-				if not (UI_GUI_TextBox["TextBox"].Text >= Range[1] and UI_GUI_TextBox["TextBox"].Text <= Range[2]) then
-					UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
-				elseif UI_GUI_TextBox["TextBox"].Text == "" and NullText == true then
-					UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
-				else
-					UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
-				end
-			end)
-			if not succes then
-				UI_GUI_TextBox["TextBox"].Text = UI_GUI_TextBox["StringValue"].Value
 			end
 		elseif ModeText == "string" then
 			UI_GUI_TextBox["StringValue"].Value = UI_GUI_TextBox["TextBox"].Text
@@ -1680,5 +1667,5 @@ UI_Obj["OpenDex"].Button.Activated:Connect(function()
 end)
 
 UI_Obj["TransTextBox"].StrValue.Changed:Connect(function()
-	UI["GUI"][4].GroupTransparency = UI_Obj["TransTextBox"].StrValue.Value
+	UI["GUI"][5].GroupTransparency = UI_Obj["TransTextBox"].StrValue.Value
 end)
