@@ -6,6 +6,7 @@ local UI_Table = {
 	ScreenGui = Instance.new("ScreenGui"),
 	BillboardGui = Instance.new("BillboardGui"),
 	Frame = Instance.new("Frame"),
+	CanvasGroup = Instance.new("CanvasGroup"),
 	ScrollingFrame = Instance.new("ScrollingFrame"),
 	TextLabel = Instance.new("TextLabel"),
 	TextBox = Instance.new("TextBox"),
